@@ -150,7 +150,12 @@ def CHECK_DOMAIN_ODNS (input_value):
 ######################################################
 def CHECK_HASH_ODNS (input_value):
 
-    resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
+    try:
+        resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
+    except resp_hash.exceptions.HTTPError as e:
+        # Whoops it wasn't a 200
+        return "Error: " + str(e)
+
     resp_hash_json = resp_hash.json()
 
 #    print(json.dumps(resp_hash_json, indent=4, separators=(',', ': ')))
