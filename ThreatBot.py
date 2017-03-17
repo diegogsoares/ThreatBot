@@ -306,7 +306,7 @@ def CHECK_AMP (input_value,type):
     for i in resp_amp_json["data"]:
         print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
 
-    print_msg = print_msg + " More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
+    print_msg = print_msg + " OI OI OI More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
 
     logger.info("AMP OK!")
 
