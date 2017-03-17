@@ -152,11 +152,8 @@ def CHECK_HASH_ODNS (input_value):
 
     resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
 
-    try:
-        resp_hash.raise_for_status()
-    except resp_hash.exceptions.HTTPError as e:
-        # Whoops it wasn't a 200
-        return "Error: " + str(e)
+    if resp_hash.status_code != 200:
+        return "Error: API Call Status " + resp_hash.status_code
 
     resp_hash_json = resp_hash.json()
 
