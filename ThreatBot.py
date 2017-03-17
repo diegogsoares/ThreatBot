@@ -96,10 +96,10 @@ def CHECK_DOMAIN_ODNS (input_value):
         print_msg = "@OpenDNS " + input_value + " is categorized as " + security_category + "and is in the Block List!\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
-            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
             loop_count = 1
             for ii in resp_samples_json["samples"]:
-                if loop_count <= 4:
+                if loop_count <= 5:
                     print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
@@ -112,10 +112,10 @@ def CHECK_DOMAIN_ODNS (input_value):
         print_msg = "@OpenDNS " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
-            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
             loop_count = 1
             for ii in resp_samples_json["samples"]:
-                if loop_count <=4:
+                if loop_count <=5:
                     print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
@@ -130,10 +130,10 @@ def CHECK_DOMAIN_ODNS (input_value):
             totalresults = 0
 
         if totalresults > 0:
-            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
             loop_count = 1
             for ii in resp_samples_json["samples"]:
-                if loop_count <= 4:
+                if loop_count <= 5:
                     print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
@@ -269,7 +269,7 @@ def CHECK_QUERY_TG (input_value,input):
 
     samples_tg_count = str(resp_ip_tg_json['data']['current_item_count'])
 
-    print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis are/were the sample(s) found:\n"
+    print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis is/are some sample(s) found:\n"
 
     loop_count =1
 
@@ -320,8 +320,11 @@ def CHECK_AMP (input_value,type):
     else:
         print_msg = "\n@Cisco AMP found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
 
+    loop_count = 1
     for i in resp_amp_json["data"]:
-        print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
+        if loop_count <=5:
+            print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
+            loop_count += 1
 
     print_msg = print_msg + "More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
 
@@ -395,8 +398,7 @@ def index(request):
 
         if (validators.domain(in_message) and validuser == True):
             logger.info("DOMAIN!!")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
@@ -411,9 +413,7 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
         elif (validators.ipv4(in_message) and validuser == True):
-            logger.info("IP ADDRESS!!")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
@@ -429,8 +429,7 @@ def index(request):
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
@@ -446,8 +445,7 @@ def index(request):
 
         elif (len(in_message) == 64 and validuser == True):
             logger.info("SHA256 Hash!!")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
