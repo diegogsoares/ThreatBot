@@ -82,6 +82,15 @@ def CHECK_DOMAIN_ODNS (input_value):
     resp_secscore = requests.get(odns_uri + odns_secscore_url + input_value + ".json", headers=investigate_header)
     resp_samples = requests.get(odns_uri + odns_samples_url + input_value, headers=investigate_header)
 
+    if resp_category.status_code != 200:
+        return "Umbrella Error: API Call Status " + str(resp_category.status_code)
+
+    if resp_secscore.status_code != 200:
+        return "Umbrella Error: API Call Status " + str(resp_secscore.status_code)
+
+    if resp_samples.status_code != 200:
+        return "Umbrella Error: API Call Status " + str(resp_samples.status_code)
+
     resp_category_json=resp_category.json()
     resp_secscore_json=resp_secscore.json()
     resp_samples_json=resp_samples.json()
@@ -153,7 +162,7 @@ def CHECK_HASH_ODNS (input_value):
     resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
 
     if resp_hash.status_code != 200:
-        return "Error: API Call Status " + str(resp_hash.status_code)
+        return "Umbrella Error: API Call Status " + str(resp_hash.status_code)
 
     resp_hash_json = resp_hash.json()
 
@@ -180,6 +189,10 @@ def CHECK_IP_VT (input_value):
 
     VT_IP_PARAMTERS={'ip': input_value, 'apikey': credential.vt_accessToken}
     resp_ip_vt = requests.get(VT_IP_URL, params=VT_IP_PARAMTERS)
+
+    if resp_ip_vt.status_code != 200:
+        return "VirusTotal Error: API Call Status " + str(resp_ip_vt.status_code)
+
     resp_ip_vt_json = resp_ip_vt.json()
 
 #    print(json.dumps(resp_ip_vt_json, indent=4, separators=(',', ': ')))
@@ -210,8 +223,11 @@ def CHECK_IP_VT (input_value):
 def CHECK_DOMAIN_VT (input_value):
 
     VT_DOMAIN_PARAMTERS={'domain': input_value, 'apikey': credential.vt_accessToken}
-
     resp_domain_vt = requests.get(VT_DOMAIN_URL, params=VT_DOMAIN_PARAMTERS, verify=False)
+
+    if resp_domain_vt.status_code != 200:
+        return "VirusTotal Error: API Call Status " + str(resp_domain_vt.status_code)
+
     resp_domain_vt_json = resp_domain_vt.json()
 
 #    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
@@ -238,6 +254,10 @@ def CHECK_HASH_VT (input_value):
 
     VT_HASH_PARAMTERS={'apikey': credential.vt_accessToken, 'resource': input_value}
     resp_hash_vt = requests.post(VT_HASH_URL, headers=VT_HEADERS, params=VT_HASH_PARAMTERS)
+
+    if resp_hash_vt.status_code != 200:
+        return "VirusTotal Error: API Call Status " + str(resp_hash_vt.status_code)
+
     resp_hash_vt_json = resp_hash_vt.json()
 
 #    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
@@ -267,6 +287,10 @@ def CHECK_QUERY_TG (input_value,input):
 
     parameters_ip_tg='api_key='+credential.tg_apikey+'&q='+input_value+'&limit=50'
     resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
+
+    if resp_ip_tg.status_code != 200:
+        return "VirusTotal Error: API Call Status " + str(resp_ip_tg.status_code)
+
     resp_ip_tg_json = resp_ip_tg.json()
 
 #    print(json.dumps(resp_ip_tg_json, indent=4, separators=(',', ': ')))
@@ -301,12 +325,18 @@ def CHECK_QUERY_TG (input_value,input):
 def CHECK_AMP (input_value,type):
 
     resp_amp = requests.get(amp_url_pc+input_value, headers=amp_header)
+
+    if resp_amp.status_code != 200:
+        return "AMP Error: API Call Status " + str(resp_amp.status_code)
+
     resp_amp_json = resp_amp.json()
 
 #    print(json.dumps(resp_amp_json, indent=4, separators=(',', ': ')))
 
     if type == 'hash256':
         resp_amp_hash = requests.get(amp_url_hash + input_value, headers=amp_header)
+        if resp_amp_hash.status_code != 200:
+            return "AMP Error: API Call Status " + str(resp_amp_hash.status_code)
         resp_amp_hash_json = resp_amp_hash.json()
         count=0
         if resp_amp_hash_json["data"]:
