@@ -97,8 +97,12 @@ def CHECK_DOMAIN_ODNS (input_value):
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            loop_count = 1
             for ii in resp_samples_json["samples"]:
-                print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                if loop_count <= 4:
+                    print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                    loop_count += 1
+
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     elif resp_category_json[input_value]["status"] == 1:
@@ -109,8 +113,11 @@ def CHECK_DOMAIN_ODNS (input_value):
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            loop_count = 1
             for ii in resp_samples_json["samples"]:
-                print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                if loop_count <=4:
+                    print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                    loop_count += 1
 
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
@@ -124,8 +131,11 @@ def CHECK_DOMAIN_ODNS (input_value):
 
         if totalresults > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, listed below:" + "\n"
+            loop_count = 1
             for ii in resp_samples_json["samples"]:
-                print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                if loop_count <= 4:
+                    print_msg = print_msg + "\t" + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                    loop_count += 1
 
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
@@ -261,10 +271,10 @@ def CHECK_QUERY_TG (input_value,input):
 
     print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis are/were the sample(s) found:\n"
 
-    loop_count =0
+    loop_count =1
 
     for i in resp_ip_tg_json["data"]["items"]:
-        if loop_count <= 4:
+        if loop_count <= 5:
             print_msg = print_msg + "\t\t"+ str(i['item']['sha1']) + " (" + str(i['item']['analysis']['threat_score'])+ ") - https://panacea.threatgrid.com/mask/#/samples/" + i['item']['sample'] + "\n"
             loop_count += 1
 
