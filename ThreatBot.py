@@ -47,6 +47,11 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 ### API URLs - ThreatGrid
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
+### LGOGOs
+odns_logo = 'https://de6f7g5i6v6qf.cloudfront.net/wp-content/uploads/2016/10/06135640/Cisco-Umbrella-Logo.svg'
+tg_logo = 'https://panacea.threatgrid.com/mask/img/logo-tg-navbar-mono.png'
+amp_logo = 'https://console.amp.cisco.com/'
+vt_logo = 'https://virustotalcloud.appspot.com/static/img/logo-small.png'
 
 
 ######################################################
@@ -306,7 +311,7 @@ def CHECK_AMP (input_value,type):
     for i in resp_amp_json["data"]:
         print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
 
-    print_msg = print_msg + " OI OI OI More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
+    print_msg = print_msg + "More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
 
     logger.info("AMP OK!")
 
@@ -380,6 +385,7 @@ def index(request):
             logger.info("DOMAIN!!")
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"domain")
@@ -395,6 +401,8 @@ def index(request):
             logger.info("IP ADDRESS!!")
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"ip")
@@ -410,6 +418,8 @@ def index(request):
             logger.info("SHA1 Hash!!")
 
             msg_odns = CHECK_HASH_ODNS(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -425,6 +435,8 @@ def index(request):
             logger.info("SHA256 Hash!!")
 
             msg_odns = CHECK_HASH_ODNS(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
