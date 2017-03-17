@@ -261,8 +261,12 @@ def CHECK_QUERY_TG (input_value,input):
 
     print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis are/were the sample(s) found:\n"
 
+    loop_count =0
+
     for i in resp_ip_tg_json["data"]["items"]:
-        print_msg = print_msg + "\t\t"+ str(i['item']['sha1']) + " (" + str(i['item']['analysis']['threat_score'])+ ") - https://panacea.threatgrid.com/mask/#/samples/" + i['item']['sample'] + "\n"
+        if loop_count <= 4:
+            print_msg = print_msg + "\t\t"+ str(i['item']['sha1']) + " (" + str(i['item']['analysis']['threat_score'])+ ") - https://panacea.threatgrid.com/mask/#/samples/" + i['item']['sample'] + "\n"
+            loop_count += 1
 
     if input == 'ip':
         print_msg = print_msg + " More information @ https://panacea.threatgrid.com/mask/#/ips/" + input_value + "\n"
