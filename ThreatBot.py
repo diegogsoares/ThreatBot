@@ -289,7 +289,7 @@ def CHECK_QUERY_TG (input_value,input):
     resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
 
     if resp_ip_tg.status_code != 200:
-        return "VirusTotal Error: API Call Status " + str(resp_ip_tg.status_code)
+        return "ThreatGrig Error: API Call Status " + str(resp_ip_tg.status_code)
 
     resp_ip_tg_json = resp_ip_tg.json()
 
