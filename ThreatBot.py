@@ -48,10 +48,8 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
 ### LGOGOs
-odns_logo = 'https://de6f7g5i6v6qf.cloudfront.net/wp-content/uploads/2016/10/06135640/Cisco-Umbrella-Logo.svg'
-tg_logo = 'https://panacea.threatgrid.com/mask/img/logo-tg-navbar-mono.png'
-amp_logo = 'https://console.amp.cisco.com/'
-vt_logo = 'https://virustotalcloud.appspot.com/static/img/logo-small.png'
+cisco_logo = 'http://www.cisco.com/web/europe/images/email/signature/logo02.jpg'
+
 
 
 ######################################################
@@ -383,9 +381,10 @@ def index(request):
 
         if (validators.domain(in_message) and validuser == True):
             logger.info("DOMAIN!!")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"domain")
@@ -399,10 +398,10 @@ def index(request):
 
         elif (validators.ipv4(in_message) and validuser == True):
             logger.info("IP ADDRESS!!")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"ip")
@@ -416,10 +415,10 @@ def index(request):
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -433,9 +432,10 @@ def index(request):
 
         elif (len(in_message) == 64 and validuser == True):
             logger.info("SHA256 Hash!!")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -445,13 +445,12 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_HASH_VT(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": vt_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
             msg = "Invalid input!!"
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
         else:
-            msg = "Unauthorized User!!\n Please contact Diego Soares - disoares@cisco.com"
+            msg = "Unauthorized User!!\n Please contact Diego Soares - disoares@cisco.com to request Access"
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
 
     datalist.close()
