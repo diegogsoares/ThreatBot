@@ -22,10 +22,10 @@ requests.packages.urllib3.disable_warnings()
 ##########
 ######################################################
 ### Import credentials
-import credential.py
+import credential
 
 ### API URLs - ODNS
-investigate_header = {'Authorization': 'Bearer ' + odns_accessToken}
+investigate_header = {'Authorization': 'Bearer ' + credential.odns_accessToken}
 odns_uri = 'https://investigate.api.umbrella.com/'
 odns_category_url = 'domains/categorization/'
 odns_secscore_url = 'security/name/'
@@ -39,8 +39,10 @@ VT_HASH_URL = "https://www.virustotal.com/vtapi/v2/file/report?"
 VT_HEADERS = {"Accept-Encoding": "gzip, deflate", "User-Agent": "gzip,  My Python requests library example client or username"}
 
 ### API URLs - AMP
-amp_header = {'Authorization': 'Basic ' + amp_auth_token,'Content-Type': 'application/json', 'Accept': 'application/json'}
+amp_header = {'Authorization': 'Basic ' + credential.amp_auth_token,'Content-Type': 'application/json', 'Accept': 'application/json'}
 amp_url = 'https://api.amp.cisco.com'
+amp_url_pc = 'https://api.amp.cisco.com/v1/computers/activity?q='
+amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 
 ### API URLs - ThreatGrid
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
@@ -159,7 +161,7 @@ def CHECK_HASH_ODNS (input_value):
 ######################################################
 def CHECK_IP_VT (input_value):
 
-    VT_IP_PARAMTERS={'ip': input_value, 'apikey': vt_accessToken}
+    VT_IP_PARAMTERS={'ip': input_value, 'apikey': credential.vt_accessToken}
     resp_ip_vt = requests.get(VT_IP_URL, params=VT_IP_PARAMTERS)
     resp_ip_vt_json = resp_ip_vt.json()
 
@@ -190,7 +192,7 @@ def CHECK_IP_VT (input_value):
 ######################################################
 def CHECK_DOMAIN_VT (input_value):
 
-    VT_DOMAIN_PARAMTERS={'domain': input_value, 'apikey': vt_accessToken}
+    VT_DOMAIN_PARAMTERS={'domain': input_value, 'apikey': credential.vt_accessToken}
 
     resp_domain_vt = requests.get(VT_DOMAIN_URL, params=VT_DOMAIN_PARAMTERS, verify=False)
     resp_domain_vt_json = resp_domain_vt.json()
@@ -217,7 +219,7 @@ def CHECK_DOMAIN_VT (input_value):
 ######################################################
 def CHECK_HASH_VT (input_value):
 
-    VT_HASH_PARAMTERS={'apikey': vt_accessToken, 'resource': input_value}
+    VT_HASH_PARAMTERS={'apikey': credential.vt_accessToken, 'resource': input_value}
     resp_hash_vt = requests.post(VT_HASH_URL, headers=VT_HEADERS, params=VT_HASH_PARAMTERS)
     resp_hash_vt_json = resp_hash_vt.json()
 
@@ -246,7 +248,7 @@ def CHECK_HASH_VT (input_value):
 ######################################################
 def CHECK_QUERY_TG (input_value,input):
 
-    parameters_ip_tg='api_key='+tg_apikey+'&q='+input_value+'&limit=50'
+    parameters_ip_tg='api_key='+credential.tg_apikey+'&q='+input_value+'&limit=50'
     resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
     resp_ip_tg_json = resp_ip_tg.json()
 
@@ -322,7 +324,7 @@ def sendSparkGET(url):
             -Getting the username of the person who posted the message if a command is recognized
     """
     request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + bearer)
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
 
     return contents
@@ -333,7 +335,7 @@ def sendSparkPOST(url, data):
             -posting a message to the Spark room to confirm that a command was received and processed
     """
     request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + bearer)
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
 
     return contents
@@ -361,7 +363,7 @@ def index(request):
     datalist = open("authorized-users.txt", "r")
     userlist = datalist.readline()
 
-    if webhook['data']['personEmail'] != bot_email:
+    if webhook['data']['personEmail'] != credential.bot_email:
 
         while userlist:
             if userlist.strip() == webhook['data']['personEmail']:
@@ -369,7 +371,7 @@ def index(request):
             userlist = datalist.readline()
 
         in_message = result.get('text', '').lower()
-        in_message = in_message.replace(bot_name, '')
+        in_message = in_message.replace(credential.bot_name, '')
 
         logger.info(webhook['data']['personEmail'])
         logger.info(in_message)
