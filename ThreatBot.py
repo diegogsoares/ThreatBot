@@ -435,8 +435,7 @@ def index(request):
             logger.info("SHA256 Hash!!")
 
             msg_odns = CHECK_HASH_ODNS(in_message)
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "files": odns_logo})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": odns_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -446,6 +445,7 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_HASH_VT(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": vt_logo})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
             msg = "Invalid input!!"
