@@ -22,7 +22,7 @@ requests.packages.urllib3.disable_warnings()
 ##########
 ######################################################
 ### Import credentials
-import credential
+import credential.py
 
 ### API URLs - ODNS
 investigate_header = {'Authorization': 'Bearer ' + odns_accessToken}
