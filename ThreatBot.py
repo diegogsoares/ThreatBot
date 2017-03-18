@@ -168,6 +168,9 @@ def CHECK_HASH_ODNS (input_value):
 
 #    print(json.dumps(resp_hash_json, indent=4, separators=(',', ': ')))
 
+    if resp_hash_json.get("error"):
+        return "Umbrella Error: " + str(resp_hash_json.get("error"))
+
     odns_hash_threatscore = resp_hash_json.get("threatScore")
     odns_hash_type = resp_hash_json.get("magicType")
 
