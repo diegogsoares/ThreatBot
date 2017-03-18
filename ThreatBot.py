@@ -358,7 +358,10 @@ def CHECK_AMP (input_value,type):
     if hash_disposition != None:
         print_msg = "\n@Cisco AMP file disposition is " + hash_disposition +" and " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
     else:
-        print_msg = "\n@Cisco AMP found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
+        if resp_amp_json['metadata']['results']['total'] != 0:
+            print_msg = "\n@Cisco AMP found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
+        else
+            print_msg = "\n@Cisco AMP did not find any activity!"
 
     loop_count = 1
     for i in resp_amp_json["data"]:
