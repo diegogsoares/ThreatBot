@@ -169,7 +169,7 @@ def CHECK_HASH_ODNS (input_value):
 #    print(json.dumps(resp_hash_json, indent=4, separators=(',', ': ')))
 
     if resp_hash_json.get("error"):
-        return "Umbrella did not find any information on this file!\n"
+        return "@ Cisco Umbrella NO information was found on this file!\n"
 
     odns_hash_threatscore = resp_hash_json.get("threatScore")
     odns_hash_type = resp_hash_json.get("magicType")
@@ -303,7 +303,10 @@ def CHECK_QUERY_TG (input_value,input):
 
     samples_tg_count = str(resp_ip_tg_json['data']['current_item_count'])
 
-    print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis is/are some sample(s) found:\n"
+    if resp_ip_tg_json['data']['current_item_count'] == 0:
+        print_msg = "\n@ThreatGrid no information was found on " + input_value + "\n"
+    else:
+        print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis is/are some sample(s) found:\n"
 
     loop_count =1
 
