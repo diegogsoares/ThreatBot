@@ -366,7 +366,7 @@ def CHECK_AMP (input_value,type):
             print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
             loop_count += 1
 
-    print_msg = print_msg + "More information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n"
+    print_msg = print_msg + "More activity information @ https://console.amp.cisco.com/search?query=" + input_value  + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value  + "/profile/details"
 
     logger.info("AMP OK!")
 
