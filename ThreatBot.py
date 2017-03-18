@@ -263,7 +263,7 @@ def CHECK_HASH_VT (input_value):
 
     resp_hash_vt_json = resp_hash_vt.json()
 
-#    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
+    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
 
     vt_hash_totals = resp_hash_vt_json.get("total")
     vt_hash_positives = resp_hash_vt_json.get("positives")
