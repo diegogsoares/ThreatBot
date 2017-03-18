@@ -360,7 +360,7 @@ def CHECK_AMP (input_value,type):
     else:
         if resp_amp_json['metadata']['results']['total'] != 0:
             print_msg = "\n@Cisco AMP found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
-        else
+        else:
             print_msg = "\n@Cisco AMP did not find any activity!"
 
     loop_count = 1
