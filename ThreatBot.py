@@ -263,7 +263,10 @@ def CHECK_HASH_VT (input_value):
 
     resp_hash_vt_json = resp_hash_vt.json()
 
-    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
+    if resp_hash_vt_json.get("response_code") == 0:
+        return "\n@VirusTotal has no information on this file!"
+
+#    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
 
     vt_hash_totals = resp_hash_vt_json.get("total")
     vt_hash_positives = resp_hash_vt_json.get("positives")
