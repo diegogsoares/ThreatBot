@@ -1,8 +1,8 @@
 import json
 import requests
-import urllib2
 import validators
-from itty import *
+#from itty import *
+import logging
 import dns.resolver
 import sys
 
@@ -442,9 +442,7 @@ def sendSparkGET(url):
         -retrieving message text, when the webhook is triggered with a message
             -Getting the username of the person who posted the message if a command is recognized
     """
-    request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
-    contents = urllib2.urlopen(request).read()
+    contents = requests.get(url, headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + credential.spark_bearer})
 
     return contents
 
@@ -453,9 +451,7 @@ def sendSparkPOST(url, data):
         This method is used for:
             -posting a message to the Spark room to confirm that a command was received and processed
     """
-    request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
-    contents = urllib2.urlopen(request).read()
+    contents = requests.post(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + credential.spark_bearer})
 
     return contents
 
