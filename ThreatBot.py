@@ -1,7 +1,7 @@
 import json
 import requests
 import validators
-from bottle import route, run
+from itty import *
 import logging
 import dns.resolver
 import sys
@@ -85,6 +85,7 @@ logger.addHandler(handler)
 ########## Check SPAM Blacklist
 ##########
 ######################################################
+"""
 def CHECK_SPAM_BL (input_value,input):
 
     print_msg = '@SPAM Blacklist:\n'
@@ -123,7 +124,7 @@ def CHECK_SPAM_BL (input_value,input):
             print_msg = 'IP not listed in ' + loop_count + 'Blacklists'
 
     return print_msg
-
+"""
 ######################################################
 ##########
 ########## Function CHECK Investigate
@@ -461,7 +462,7 @@ def sendSparkPOST(url, data):
 ##########
 ######################################################
 
-@route('/')
+@post('/')
 def index(request):
     """
         When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
@@ -570,4 +571,4 @@ def index(request):
 
     return "true"
 
-run(server='wsgiref', host='0.0.0.0', port=10010)
+run_itty(server='wsgiref', host='0.0.0.0', port=10010)
