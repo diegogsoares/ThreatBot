@@ -98,7 +98,7 @@ def CHECK_SPAM_BL (input_value,input):
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 answer_txt = my_resolver.query(query, "TXT")
-                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + ' ('+answers[0]+':'+answer_txt[0]+')\n'
+                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + ' (' + answers[0] + ':' + answer_txt[0] + ')\n'
             except dns.resolver.NXDOMAIN:
                 loop_count += 1
         if loop_count > 0:
@@ -118,7 +118,7 @@ def CHECK_SPAM_BL (input_value,input):
                 query = '.'.join(reversed(str(domain_mx).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 answer_txt = my_resolver.query(query, "TXT")
-                print_msg = print_msg + 'IP: ' + domain_mx + ' IS listed in ' + bl + ' ('+answers[0]+':'+answer_txt[0]+')\n'
+                print_msg = print_msg + 'IP: ' + domain_mx + ' IS listed in ' + bl + ' (' + answers[0] + ':' +answer_txt[0] + ')\n'
             except dns.resolver.NXDOMAIN:
                 loop_count += 1
         if loop_count > 0:
