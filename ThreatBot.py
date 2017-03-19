@@ -86,7 +86,6 @@ logger.addHandler(handler)
 ########## Check SPAM Blacklist
 ##########
 ######################################################
-"""
 def CHECK_SPAM_BL (input_value,input):
 
     print_msg = '@SPAM Blacklist:\n'
@@ -125,7 +124,7 @@ def CHECK_SPAM_BL (input_value,input):
             print_msg = 'IP not listed in ' + loop_count + 'Blacklists'
 
     return print_msg
-"""
+
 ######################################################
 ##########
 ########## Function CHECK Investigate
