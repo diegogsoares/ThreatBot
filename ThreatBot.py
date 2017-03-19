@@ -88,7 +88,7 @@ logger.addHandler(handler)
 ######################################################
 def CHECK_SPAM_BL (input_value,input):
 
-    print_msg = '@SPAM Blacklist:\n'
+    print_msg = '\n@SPAM Blacklist:\n'
     loop_count = 0
 
     if input == 'ip':
@@ -107,7 +107,7 @@ def CHECK_SPAM_BL (input_value,input):
     else:
         try:
             my_resolver = dns.resolver.Resolver()
-            domain_mx = my_resolver.query(query, "MX")
+            domain_mx = my_resolver.query(input_value, "MX")
         except dns.resolver.NXDOMAIN:
             return "@SPAM Blacklist: This domain does not have a MX Record."
 
