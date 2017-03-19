@@ -108,7 +108,7 @@ def CHECK_SPAM_BL (input_value,input):
         try:
             my_resolver = dns.resolver.Resolver()
             domain_mx = my_resolver.query(input_value, "MX")
-            print (domain_mx)
+            print (domain_mx[0])
         except dns.resolver.NXDOMAIN:
             return "@SPAM Blacklist: This domain does not have a MX Record."
 
