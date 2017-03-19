@@ -102,7 +102,7 @@ def CHECK_SPAM_BL (input_value,input):
             except dns.resolver.NXDOMAIN:
                 loop_count += 1
         if loop_count > 0:
-            print_msg = 'IP not listed in ' + loop_count + 'Blacklists'
+            print_msg = 'IP not listed in ' + str(loop_count) + 'Blacklists'
 
     else:
         try:
