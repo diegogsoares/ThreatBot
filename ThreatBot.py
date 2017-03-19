@@ -253,7 +253,7 @@ def CHECK_IP_VT (input_value):
 
     resp_ip_vt_json = resp_ip_vt.json()
 
-#    print(json.dumps(resp_ip_vt_json, indent=4, separators=(',', ': ')))
+    print(json.dumps(resp_ip_vt_json, indent=4, separators=(',', ': ')))
     ip_url_count = 0
     ip_samples_count = 0
 
