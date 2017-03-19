@@ -445,7 +445,7 @@ def sendSparkGET(url):
             -Getting the username of the person who posted the message if a command is recognized
     """
     request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + bearer)
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
     return contents
 
@@ -455,7 +455,7 @@ def sendSparkPOST(url, data):
             -posting a message to the Spark room to confirm that a command was received and processed
     """
     request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + bearer)
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
 
     return contents
