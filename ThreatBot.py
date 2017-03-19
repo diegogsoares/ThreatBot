@@ -3,6 +3,8 @@ import requests
 import urllib2
 import validators
 from itty import *
+import dns.resolver
+import sys
 
 requests.packages.urllib3.disable_warnings()
 
@@ -47,6 +49,12 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 ### API URLs - ThreatGrid
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
+### DNS Blacklists
+bls = ["zen.spamhaus.org", "spam.abuse.ch", "cbl.abuseat.org", "dnsbl.inps.de",
+       "ix.dnsbl.manitu.net", "dnsbl.sorbs.net", "bl.spamcannibal.org", "bl.spamcop.net",
+       "xbl.spamhaus.org", "pbl.spamhaus.org", "dnsbl-1.uceprotect.net", "dnsbl-2.uceprotect.net",
+       "dnsbl-3.uceprotect.net", "db.wpbl.info"]
+
 ### LGOGOs
 cisco_logo = 'http://www.cisco.com/web/europe/images/email/signature/logo02.jpg'
 
@@ -70,6 +78,51 @@ handler.setFormatter(formatter)
 
 # add the handlers to the logger
 logger.addHandler(handler)
+
+
+######################################################
+##########
+########## Check SPAM Blacklist
+##########
+######################################################
+def CHECK_SPAM_BL (input_value,input):
+
+    print_msg = '@SPAM Blacklist:\n'
+    loop_count = 0
+
+    if input == 'IP':
+        for bl in bls:
+            try:
+                my_resolver = dns.resolver.Resolver()
+                query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
+                answers = my_resolver.query(query, "A")
+                answer_txt = my_resolver.query(query, "TXT")
+                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + ' ('+answers[0]+':'+answer_txt[0]+')\n'
+            except dns.resolver.NXDOMAIN:
+                loop_count += 1
+        if loop_count > 0:
+            print_msg = 'IP not listed in ' + loop_count + 'Blacklists'
+
+    else:
+        try:
+            my_resolver = dns.resolver.Resolver()
+            domain_mx = my_resolver.query(query, "MX")
+        except dns.resolver.NXDOMAIN:
+            return "@SPAM Blacklist: This domain does not have a MX Record."
+
+        for bl in bls:
+            try:
+                my_resolver = dns.resolver.Resolver()
+                query = '.'.join(reversed(str(domain_mx).split("."))) + "." + bl
+                answers = my_resolver.query(query, "A")
+                answer_txt = my_resolver.query(query, "TXT")
+                print_msg = print_msg + 'IP: ' + domain_mx + ' IS listed in ' + bl + ' ('+answers[0]+':'+answer_txt[0]+')\n'
+            except dns.resolver.NXDOMAIN:
+                loop_count += 1
+        if loop_count > 0:
+            print_msg = 'IP not listed in ' + loop_count + 'Blacklists'
+
+    return print_msg
 
 ######################################################
 ##########
@@ -458,6 +511,9 @@ def index(request):
             msg_vt = CHECK_DOMAIN_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
+            msg_bl = CHECK_SPAM_BL(in_message,"domain")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
+
         elif (validators.ipv4(in_message) and validuser == True):
 #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
@@ -472,6 +528,9 @@ def index(request):
 
             msg_vt = CHECK_IP_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+
+            msg_bl = CHECK_SPAM_BL(in_message, "ip")
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
