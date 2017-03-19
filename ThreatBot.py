@@ -89,7 +89,7 @@ logger.addHandler(handler)
 def CHECK_SPAM_BL (input_value,input):
 
     print_msg = '\n@SPAM Blacklist:\n'
-    loop_count = 0
+    loop_count = loop_count_1 = 0
 
     if input == 'ip':
         for bl in bls:
@@ -98,7 +98,10 @@ def CHECK_SPAM_BL (input_value,input):
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
 #                answer_txt = my_resolver.query(query, "TXT")
-                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + ' \n'
+                if loop_count_1 == 0:
+                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                    loop_count_1 += 1
+                print_msg = print_msg + ', ' + bl
             except dns.resolver.NXDOMAIN:
                 loop_count += 1
         if loop_count > 0:
