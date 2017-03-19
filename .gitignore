@@ -12,3 +12,5 @@ amp-session.py
 senderbase.py
 
 spam-bl.py
+
+*.old

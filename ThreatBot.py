@@ -1,7 +1,7 @@
 import json
 import requests
 import validators
-#from itty import *
+from bottle import route, run
 import logging
 import dns.resolver
 import sys
@@ -461,7 +461,7 @@ def sendSparkPOST(url, data):
 ##########
 ######################################################
 
-@post('/')
+@route('/')
 def index(request):
     """
         When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
@@ -570,4 +570,4 @@ def index(request):
 
     return "true"
 
-run_itty(server='wsgiref', host='0.0.0.0', port=10010)
+run(server='wsgiref', host='0.0.0.0', port=10010)
