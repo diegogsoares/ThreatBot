@@ -91,7 +91,7 @@ def CHECK_SPAM_BL (input_value,input):
     print_msg = '@SPAM Blacklist:\n'
     loop_count = 0
 
-    if input == 'IP':
+    if input == 'ip':
         for bl in bls:
             try:
                 my_resolver = dns.resolver.Resolver()
