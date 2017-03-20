@@ -14,7 +14,6 @@ requests.packages.urllib3.disable_warnings()
 ### Talos Intel - amptools.cisco.com
 ### Bright Cloud
 ### mxtoolbox.com/SuperTool.aspx#
-### SRBS
 ### Stealthwatch flows for domain + IPs
 ### FMC for domain + IPs
 ###
@@ -104,7 +103,7 @@ def CHECK_SPAM_BL (input_value,input):
                     loop_count_1 += 1
                 else:
                     print_msg = print_msg + ', ' + bl
-            except dns.resolver.NXDOMAIN:
+            except dns.resolver:
                 loop_count += 1
         if loop_count > 0:
             print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
