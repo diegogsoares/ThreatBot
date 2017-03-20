@@ -87,7 +87,7 @@ logger.addHandler(handler)
 ######################################################
 def CHECK_SPAM_BL (input_value,input):
 
-    print_msg = '\n@SPAM Blacklist:\n'
+    print_msg = ''
     loop_count = loop_count_1 = 0
     mxservers = []
 
@@ -118,9 +118,9 @@ def CHECK_SPAM_BL (input_value,input):
                 mx_ip = my_resolver1.query(mail_server, "A")
                 mxservers.append(mx_ip[0])
         except dns.resolver.NXDOMAIN:
-            return "\n@SPAM Blacklist: This domain does not have a MX Record."
+            return "This domain does not have a MX Record."
         except dns.resolver.NoAnswer:
-            return "\n@SPAM Blacklist: This domain does not have a MX Record."
+            return "This domain does not have a MX Record."
 
         count_ip = count_ip_yes = count_bl = count_yes = count_no = 0
         for server_ip in mxservers:
@@ -176,7 +176,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["security_categories"]:
             security_category +=  i + ", "
-        print_msg = "@OpenDNS " + input_value + " is categorized as " + security_category + "and is in the Block List!\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is in the Block List!\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -192,7 +192,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["content_categories"]:
             security_category +=  i + ", "
-        print_msg = "@OpenDNS " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -205,7 +205,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     else:
-        print_msg = "@OpenDNS " + input_value + " is Unclassified!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is Unclassified!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json.get("totalResults"):
             totalresults = str(resp_samples_json.get("totalResults"))
@@ -552,6 +552,8 @@ def index(request):
 #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
+            msg_odns_mark = '###@Cisco Umbrella \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"domain")
@@ -574,6 +576,8 @@ def index(request):
 #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_DOMAIN_ODNS(in_message)
+            msg_odns_mark = '###@Cisco Umbrella \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"ip")
@@ -604,6 +608,8 @@ def index(request):
 #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
+            msg_odns_mark = '###@Cisco Umbrella \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -621,6 +627,8 @@ def index(request):
 #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
             msg_odns = CHECK_HASH_ODNS(in_message)
+            msg_odns_mark = '###@Cisco Umbrella \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
@@ -633,13 +641,12 @@ def index(request):
 
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+
         elif validuser == True:
-#            msg = "Invalid input!! Use IPs, Domains or Hashes."
             msg_mark = "###Invalid input!! \n Use IPs, Domains or Hashes.\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
         else:
             msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
-
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
 
     datalist.close()
