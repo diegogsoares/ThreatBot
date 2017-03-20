@@ -461,9 +461,9 @@ def CHECK_AMP (input_value,type):
 def TALOS_BLOCK_LIST(input_value):
     talos_bl = False
     datalist = open("ip-filter.blf", "r")
-    datalist.close()
     iplist = datalist.readline()
     talos_count = 0
+
     while iplist:
         if iplist.strip() == input_value:
             talos_bl = True
@@ -471,9 +471,11 @@ def TALOS_BLOCK_LIST(input_value):
         talos_count += 1
 
     if talos_bl == True:
-        print_msg = "\n@Talos IP block list IP: %s WAS found!" % (input_value)
+        print_msg = "\n@Talos IP block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
     else:
-        print_msg = "\n@Talos IP block list IP: %s was NOT found!" % (input_value)
+        print_msg = "\n@Talos IP block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
+
+    datalist.close()
 
     return print_msg
 
