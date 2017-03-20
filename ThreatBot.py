@@ -118,9 +118,9 @@ def CHECK_SPAM_BL (input_value,input):
                 mx_ip = my_resolver1.query(mail_server, "A")
                 mxservers.append(mx_ip[0])
         except dns.resolver.NXDOMAIN:
-            return "@SPAM Blacklist: This domain does not have a MX Record."
+            return "\n@SPAM Blacklist: This domain does not have a MX Record."
         except dns.resolver.NoAnswer:
-            return "@SPAM Blacklist: This domain does not have a MX Record."
+            return "\n@SPAM Blacklist: This domain does not have a MX Record."
 
         count_ip = count_ip_yes = count_bl = count_yes = count_no = 0
         for server_ip in mxservers:
