@@ -168,6 +168,7 @@ def CHECK_SPAM_BL (input_value,input):
                 loop_count += 1
             except dns.resolver.Timeout:
                 loop_count_2 += 1
+                print (bl)
 
         if loop_count > 0:
             print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
