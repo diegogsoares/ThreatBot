@@ -598,7 +598,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= "\n @Cisco AMP can only search SHA-256 Hashes!"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+            msg_amp_mark = "\n **@Cisco AMP** can only search SHA-256 Hashes!"
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp, "markdown": msg_amp_mark})
 
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
