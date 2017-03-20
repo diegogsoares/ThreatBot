@@ -597,9 +597,9 @@ def index(request):
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-            msg_amp= "@Cisco AMP Use SHA-256 Hashes!"
-            msg_amp_mark = "##@Cisco AMP \n Use SHA-256 Hashes!"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp, "markdown": msg_amp_mark})
+#            msg_amp= "@Cisco AMP Use SHA-256 Hashes!"
+            msg_amp_mark = "###@Cisco AMP \n Use SHA-256 Hashes!"
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
 
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
