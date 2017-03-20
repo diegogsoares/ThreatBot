@@ -311,6 +311,9 @@ def CHECK_DOMAIN_VT (input_value):
 
     resp_domain_vt_json = resp_domain_vt.json()
 
+    if resp_ip_vt_json['response_code'] == 0:
+        return '\n@VirusTotal no information was found on '+input_value
+
 #    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
 
     security_category = resp_domain_vt_json.get("categories")
@@ -382,9 +385,9 @@ def CHECK_QUERY_TG (input_value,input):
     samples_tg_count = str(resp_ip_tg_json['data']['current_item_count'])
 
     if resp_ip_tg_json['data']['current_item_count'] == 0:
-        print_msg = "\n@ThreatGrid no information was found on " + input_value + "\n"
+        print_msg = "NO information was found on " + input_value + "\n"
     else:
-        print_msg = "\n@ThreatGrid found " + samples_tg_count + " Malware Samples!\n\tThis is/are some sample(s) found:\n"
+        print_msg = "We found " + samples_tg_count + " Malware Samples!\n\tThis is/are some sample(s) found:\n"
 
     loop_count =1
 
@@ -557,6 +560,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"domain")
+            msg_tg_mark = '###@Cisco ThreatGrid \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message   ,"domain")
@@ -581,6 +586,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"ip")
+            msg_tg_mark = '###@Cisco ThreatGrid \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message,"ip")
@@ -613,9 +620,10 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
+            msg_tg_mark = '###@Cisco ThreatGrid \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-#            msg_amp= "@Cisco AMP Use SHA-256 Hashes!"
             msg_amp_mark = "###@Cisco AMP \n Use SHA-256 Hashes!"
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
 
@@ -632,6 +640,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
             msg_tg = CHECK_QUERY_TG(in_message,"hash")
+            msg_tg_mark = '###@Cisco ThreatGrid \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message,"hash256")
