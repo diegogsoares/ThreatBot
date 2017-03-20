@@ -154,7 +154,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-                my_resolver.nameservers = ['208.67.222.222']
+#                my_resolver.nameservers = ['208.67.222.222']
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
@@ -177,7 +177,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-                my_resolver.nameservers = ['208.67.222.222']
+#                my_resolver.nameservers = ['208.67.222.222']
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
@@ -659,17 +659,15 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
-            msg_bl = CHECK_SPAM_BL(in_message, "ip")
-            msg_bl_mark = '###@SPAM Block List \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
-
             msg_talos = TALOS_BLOCK_LIST(in_message)
             msg_talos_mark = '###@Cisco TALOS \n'
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
 
-
+            msg_bl = CHECK_SPAM_BL(in_message, "ip")
+            msg_bl_mark = '###@SPAM Block List \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
