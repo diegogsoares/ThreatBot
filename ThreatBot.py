@@ -111,22 +111,33 @@ def CHECK_SPAM_BL (input_value,input):
     else:
         try:
             my_resolver = dns.resolver.Resolver()
-            domain_mx = my_resolver.query(input_value, "MX")
-            print (domain_mx[0])
+            answers = my_resolver.query(input_value, "MX")
+            for mx_server in answers:
+                weigth, mail_server = str(mx_server).split(" ")
+                my_resolver1 = dns.resolver.Resolver()
+                mx_ip = my_resolver1.query(mail_server, "A")
+                mxservers.append(mx_ip[0])
         except dns.resolver.NXDOMAIN:
             return "@SPAM Blacklist: This domain does not have a MX Record."
 
-        for bl in bls:
-            try:
-                my_resolver = dns.resolver.Resolver()
-                query = '.'.join(reversed(str(domain_mx).split("."))) + "." + bl
-                answers = my_resolver.query(query, "A")
-                answer_txt = my_resolver.query(query, "TXT")
-                print_msg = print_msg + 'IP: ' + domain_mx + ' IS listed in ' + bl + ' \n'
-            except dns.resolver.NXDOMAIN:
-                loop_count += 1
-        if loop_count > 0:
-            print_msg = print_msg + 'Domain not listed in ' + str(loop_count) + ' Blacklists'
+        count_ip = count_ip_yes = count_bl = count_yes = count_no = 0
+        for server_ip in mxservers:
+            count_ip += 1
+            count_bl = count_yes = count_no = 0
+
+            for bl in bls:
+                count_bl += 1
+                try:
+                    my_resolver = dns.resolver.Resolver()
+                    query = '.'.join(reversed(str(server_ip).split("."))) + "." + bl
+                    answers = my_resolver.query(query, "A")
+                    count_yes += 1
+                except dns.resolver.NXDOMAIN:
+                    count_no += 1
+
+            if count_yes >> 0:
+                count_ip_yes += 1
+        print_msg = print_msg + 'Domain: %s has %s MX Servers found in %s Blacklists!' % (myIP, count_ip, count_ip_yes)
 
     return print_msg
 
