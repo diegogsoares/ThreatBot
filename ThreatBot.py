@@ -163,6 +163,10 @@ def CHECK_SPAM_BL (input_value,input):
                 print_msg = print_msg + ', ' + bl
         except dns.resolver.NXDOMAIN:
             loop_count += 1
+        except dns.resolver.NoAnswer:
+            loop_count += 1
+        except dns.resolver.Timeout:
+            
     if loop_count > 0:
         print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
 
@@ -180,6 +184,8 @@ def CHECK_SPAM_BL (input_value,input):
             return "This domain does not have a MX Record."
         except dns.resolver.NoAnswer:
             return "This domain does not have a MX Record."
+        except dns.resolver.Timeout:
+            return "Not able to find a MX Server."
 
         count_ip = count_ip_yes = count_bl = count_yes = count_no = 0
         for server_ip in mxservers:
