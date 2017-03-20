@@ -147,7 +147,7 @@ logger.addHandler(handler)
 def CHECK_SPAM_BL (input_value,input):
 
     print_msg = ''
-    loop_count = loop_count_1 = 0
+    loop_count = loop_count_1 = loop_count_2 = 0
     mxservers = []
 
 
@@ -166,6 +166,7 @@ def CHECK_SPAM_BL (input_value,input):
         except dns.resolver.NoAnswer:
             loop_count += 1
         except dns.resolver.Timeout:
+            loop_count_2 += 1
 
     if loop_count > 0:
         print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
