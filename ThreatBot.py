@@ -437,12 +437,12 @@ def CHECK_AMP (input_value,type):
         hash_disposition = None
 
     if hash_disposition != None:
-        print_msg = "###@Cisco AMP \n File disposition is " + hash_disposition +" and " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
+        print_msg = "File disposition is " + hash_disposition +" and " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
     else:
         if resp_amp_json['metadata']['results']['total'] != 0:
-            print_msg = "###@Cisco AMP \n We found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
+            print_msg = "We found " + str(resp_amp_json['metadata']['results']['total']) + " Connectors that saw this activity!\n\tThis are/were the connector(s):\n"
         else:
-            print_msg = "###@Cisco AMP \n We did not find any activity!\n"
+            print_msg = "We did not find any activity!\n"
 
     loop_count = 1
     for i in resp_amp_json["data"]:
@@ -450,7 +450,7 @@ def CHECK_AMP (input_value,type):
             print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
             loop_count += 1
 
-    print_msg = print_msg + "\nMore activity information @ https://console.amp.cisco.com/search?query=" + input_value  + "\n\nMore about file details @ https://console.amp.cisco.com/file/" + input_value  + "/profile/details\n"
+    print_msg = print_msg + "\nMore activity information @ https://console.amp.cisco.com/search?query=" + input_value  + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value  + "/profile/details\n"
 
     logger.info("AMP OK!")
 
@@ -558,7 +558,9 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message   ,"domain")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp, "markdown": msg_amp})
+            msg_amp_mark = '###@Cisco AMP \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_DOMAIN_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
@@ -576,7 +578,9 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message,"ip")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp, "markdown": msg_amp})
+            msg_amp_mark = '###@Cisco AMP \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_IP_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
@@ -615,8 +619,10 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
             msg_amp= CHECK_AMP(in_message,"hash256")
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp, "markdown": msg_amp})
-
+            msg_amp_mark = '###@Cisco AMP \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+            
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
