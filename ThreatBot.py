@@ -311,7 +311,7 @@ def CHECK_DOMAIN_VT (input_value):
 
     resp_domain_vt_json = resp_domain_vt.json()
 
-    if resp_ip_vt_json['response_code'] == 0:
+    if resp_domain_vt_json['response_code'] == 0:
         return '\n@VirusTotal no information was found on '+input_value
 
 #    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
