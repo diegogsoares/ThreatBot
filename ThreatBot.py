@@ -49,11 +49,70 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 ### API URLs - ThreatGrid
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
-### DNS Blacklists
-bls = ["zen.spamhaus.org", "spam.abuse.ch", "cbl.abuseat.org", "dnsbl.inps.de",
-       "ix.dnsbl.manitu.net", "dnsbl.sorbs.net", "bl.spamcannibal.org", "bl.spamcop.net",
-       "xbl.spamhaus.org", "pbl.spamhaus.org", "dnsbl-1.uceprotect.net", "dnsbl-2.uceprotect.net",
-       "dnsbl-3.uceprotect.net", "db.wpbl.info"]
+### IP Blacklists
+bls = ['b.barracudacentral.org',
+    'cbl.abuseat.org',
+    'http.dnsbl.sorbs.net', 'misc.dnsbl.sorbs.net', 'socks.dnsbl.sorbs.net', 'web.dnsbl.sorbs.net', 'dnsbl.sorbs.net',
+    'dul.dnsbl.sorbs.net', 'smtp.dnsbl.sorbs.net', 'spam.dnsbl.sorbs.net', 'zombie.dnsbl.sorbs.net', 'dynablock.sorbs.net',
+    'dnsbl-1.uceprotect.net', 'dnsbl-2.uceprotect.net', 'dnsbl-3.uceprotect.net',
+    'sbl.spamhaus.org', 'zen.spamhaus.org', 'dbl.spamhaus.org', 'pbl.spamhaus.org', 'xbl.spamhaus.org',
+    'virus.rbl.msrbl.net', 'phishing.rbl.msrbl.net', 'images.rbl.msrbl.net', 'spam.rbl.msrbl.net', 'combined.rbl.msrbl.net',
+    'noptr.spamrats.com', 'dyna.spamrats.com', 'spam.spamrats.com',
+    'cbl.anti-spam.org.cn', 'cblless.anti-spam.org.cn', 'cblplus.anti-spam.org.cn',
+    'relays.mail-abuse.org', 'rbl-plus.mail-abuse.org', 'blackholes.mail-abuse.org', 'dialups.mail-abuse.org',
+    'psbl.surriel.com',
+    'rbl.spamlab.com',
+    'dnsbl.inps.de',
+    'httpbl.abuse.ch',
+    'virus.rbl.jp',
+    'wormrbl.imp.ch',
+    'ips.backscatterer.org',
+    'opm.tornevall.org',
+    'multi.surbl.org',
+    'tor.dan.me.uk',
+    'access.redhawk.org',
+    'rbl.interserver.net',
+    'bogons.cymru.com',
+    'bl.spamcop.net',
+    'bl.spamcannibal.org',
+    'ubl.unsubscore.com',
+    'drone.abuse.ch',
+    'dul.ru',
+    'short.rbl.jp',
+    'spamrbl.imp.ch',
+    'virbl.bit.nl',
+    'dsn.rfc-ignorant.org',
+    'netblock.pedantic.org',
+    'ix.dnsbl.manitu.net',
+    'rbl.efnetrbl.org',
+    'dnsbl.dronebl.org',
+    'db.wpbl.info',
+    'query.senderbase.org',
+    'bl.emailbasura.org',
+    'multi.uribl.com',
+    'blackholes.five-ten-sg.com',
+    'dnsbl.kempt.net',
+    'blacklist.woody.ch',
+    'rot.blackhole.cantv.net',
+    'spamlist.or.kr',
+    'dnsbl.abuse.ch',
+    'bl.deadbeef.com',
+    'forbidden.icm.edu.pl',
+    'ubl.lashback.com',
+    'uribl.swinog.ch',
+    'bsb.spamlookup.net',
+    'dob.sibl.support-intelligence.net',
+    'url.rbl.jp',
+    'dyndns.rbl.jp',
+    'orvedb.aupads.org',
+    'relays.nether.net',
+    'duinv.aupads.org',
+    'residential.block.transip.nl',
+    'dynip.rothen.com',
+    'dul.blackhole.cantv.net',
+    'mail.people.it',
+    'spam.abuse.ch',
+    'db.wpbl.info']
 
 ### LGOGOs
 cisco_logo = 'http://www.cisco.com/web/europe/images/email/signature/logo02.jpg'
@@ -91,24 +150,24 @@ def CHECK_SPAM_BL (input_value,input):
     loop_count = loop_count_1 = 0
     mxservers = []
 
-    if input == 'ip':
-        for bl in bls:
-            try:
-                my_resolver = dns.resolver.Resolver()
-                query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
-                answers = my_resolver.query(query, "A")
-#                answer_txt = my_resolver.query(query, "TXT")
-                if loop_count_1 == 0:
-                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
-                    loop_count_1 += 1
-                else:
-                    print_msg = print_msg + ', ' + bl
-            except dns.resolver.NXDOMAIN:
-                loop_count += 1
-        if loop_count > 0:
-            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
 
-    else:
+    for bl in bls:
+        try:
+            my_resolver = dns.resolver.Resolver()
+            query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
+            answers = my_resolver.query(query, "A")
+            if loop_count_1 == 0:
+                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                loop_count_1 += 1
+            else:
+                print_msg = print_msg + ', ' + bl
+        except dns.resolver.NXDOMAIN:
+            loop_count += 1
+    if loop_count > 0:
+        print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
+
+
+    if input == 'domain':
         try:
             my_resolver = dns.resolver.Resolver()
             answers = my_resolver.query(input_value, "MX")
