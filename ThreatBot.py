@@ -154,6 +154,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
+                my_resolver.nameservers = ['208.67.222.222']
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
@@ -169,13 +170,14 @@ def CHECK_SPAM_BL (input_value,input):
                 loop_count_2 += 1
 
         if loop_count > 0:
-            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + bl_count
+            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
 
     elif input == 'domain':
         for bl in bls:
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
+                my_resolver.nameservers = ['208.67.222.222']
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
@@ -191,7 +193,7 @@ def CHECK_SPAM_BL (input_value,input):
                 loop_count_2 += 1
 
         if loop_count > 0:
-            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + bl_count
+            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
 
     logger.info("SPAM BL OK!")
 
