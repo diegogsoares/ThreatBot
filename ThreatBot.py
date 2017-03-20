@@ -621,13 +621,12 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
 #            msg = "Invalid input!! Use IPs, Domains or Hashes."
-            msg_mark = "\n ###Invalid input!!** \n Use IPs, Domains or Hashes."
+            msg_mark = "###Invalid input!! \n Use IPs, Domains or Hashes.\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
         else:
-            msg_mark = "**Unauthorized User!!** \n\n Please contact Diego Soares - disoares@cisco.com to request Access\n"
-            msg = "Unauthorized User!!  Please contact Diego Soares - disoares@cisco.com to request Access"
+            msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
 
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg, "markdown": msg_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
 
     datalist.close()
 
