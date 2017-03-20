@@ -106,7 +106,7 @@ def CHECK_SPAM_BL (input_value,input):
             except dns.resolver.NXDOMAIN:
                 loop_count += 1
         if loop_count > 0:
-            print_msg = print_msg + 'IP not listed in ' + str(loop_count) + ' Blacklists'
+            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
 
     else:
         try:
@@ -243,12 +243,12 @@ def CHECK_HASH_ODNS (input_value):
 #    print(json.dumps(resp_hash_json, indent=4, separators=(',', ': ')))
 
     if resp_hash_json.get("error"):
-        return "@ Cisco Umbrella NO information was found on this file!\n"
+        return "NO information was found on this file!\n"
 
     odns_hash_threatscore = resp_hash_json.get("threatScore")
     odns_hash_type = resp_hash_json.get("magicType")
 
-    print_msg = "@OpenDNS " + str(input_value) + " was classified as " + str(odns_hash_type) + " with a threat score of " + str(odns_hash_threatscore) + "!\n\t These are the connections seen by ThreatGrid:\n"
+    print_msg = " " + str(input_value) + " was classified as " + str(odns_hash_type) + " with a threat score of " + str(odns_hash_threatscore) + "!\n\t These are the connections seen by ThreatGrid:\n"
     for i in resp_hash_json["connections"]['connections']:
         print_msg = print_msg + "\t\t" + i['name'] + "\n"
     print_msg = print_msg + " More information @ https://investigate.umbrella.com/sample-view/" + input_value + "\n"
@@ -289,7 +289,7 @@ def CHECK_IP_VT (input_value):
             if ii['positives'] >= 5:
                 ip_samples_count=ip_samples_count+1
 
-    print_msg = "\nThis IP Address hosts " + str(ip_url_count) + " malicious URLs and " + str(ip_samples_count) + " malicious Files!\n"
+    print_msg = "This IP Address hosts " + str(ip_url_count) + " malicious URLs and " + str(ip_samples_count) + " malicious Files!\n"
     print_msg = print_msg + " More information @ https://virustotal.com/en/ip-address/" + input_value + "/information\n"
 
     logger.info("VT OK!")
