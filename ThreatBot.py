@@ -369,7 +369,7 @@ def CHECK_DOMAIN_VT (input_value):
     if resp_domain_vt_json['response_code'] == 0:
         return 'No information was found on '+input_value
 
-#    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
+    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
 
     security_category = resp_domain_vt_json.get("categories")
     print_msg = " " + input_value + " is categorized as " + str(security_category) + "\n"
