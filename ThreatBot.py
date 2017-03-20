@@ -455,6 +455,30 @@ def CHECK_AMP (input_value,type):
 
 ######################################################
 ##########
+########## Check Talos Block List
+##########
+######################################################
+def TALOS_BLOCK_LIST(input_value):
+    talos_bl = False
+    datalist = open("ip-filter.blf", "r")
+    datalist.close()
+    iplist = datalist.readline()
+    talos_count = 0
+    while iplist:
+        if iplist.strip() == input_value:
+            talos_bl = True
+        iplist = datalist.readline()
+        talos_count += 1
+
+    if talos_bl == True:
+        print_msg = "\n@Talos IP block list IP: %s WAS found!" % (input_value)
+    else:
+        print_msg = "\n@Talos IP block list IP: %s was NOT found!" % (input_value)
+
+    return print_msg
+
+######################################################
+##########
 ########## Function Interact with Spark with a Bot
 ##########
 ######################################################
@@ -552,6 +576,9 @@ def index(request):
 
             msg_bl = CHECK_SPAM_BL(in_message, "ip")
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
+
+            msg_talos = TALOS_BLOCK_LIST(in_message)
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
