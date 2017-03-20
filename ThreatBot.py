@@ -619,8 +619,8 @@ def index(request):
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
-            msg = "Invalid input!!\n Use IPs, Domains or Hashes."
-            msg_mark = "**Invalid input!!**\n Use IPs, Domains or Hashes."
+            msg = "Invalid input!! Use IPs, Domains or Hashes."
+            msg_mark = "**Invalid input!!** \n Use IPs, Domains or Hashes."
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg, "markdown": msg_mark})
         else:
             msg_mark = "**Unauthorized User!!** \n\n Please contact Diego Soares disoares@cisco.com to request Access\n"
