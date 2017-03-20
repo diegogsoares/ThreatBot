@@ -90,7 +90,8 @@ def CHECK_SPAM_BL (input_value,input):
 
     print_msg = '\n@SPAM Blacklist:\n'
     loop_count = loop_count_1 = 0
-
+    mxservers = []
+    
     if input == 'ip':
         for bl in bls:
             try:
