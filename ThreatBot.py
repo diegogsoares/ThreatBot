@@ -148,64 +148,48 @@ def CHECK_SPAM_BL (input_value,input):
 
     print_msg = ''
     loop_count = loop_count_1 = loop_count_2 = 0
-    mxservers = []
 
+    if input == 'ip':
+        for bl in bls:
+            try:
+                my_resolver = dns.resolver.Resolver()
+                query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
+                answers = my_resolver.query(query, "A")
+                if loop_count_1 == 0:
+                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                    loop_count_1 += 1
+                else:
+                    print_msg = print_msg + ', ' + bl
+            except dns.resolver.NXDOMAIN:
+                loop_count += 1
+            except dns.resolver.NoAnswer:
+                loop_count += 1
+            except dns.resolver.Timeout:
+                loop_count_2 += 1
 
-    for bl in bls:
-        try:
-            my_resolver = dns.resolver.Resolver()
-            query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
-            answers = my_resolver.query(query, "A")
-            if loop_count_1 == 0:
-                print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
-                loop_count_1 += 1
-            else:
-                print_msg = print_msg + ', ' + bl
-        except dns.resolver.NXDOMAIN:
-            loop_count += 1
-        except dns.resolver.NoAnswer:
-            loop_count += 1
-        except dns.resolver.Timeout:
-            loop_count_2 += 1
+        if loop_count > 0:
+            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
 
-    if loop_count > 0:
-        print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
+    elif input == 'domain':
+        for bl in bls:
+            try:
+                my_resolver = dns.resolver.Resolver()
+                query = input_value + bl
+                answers = my_resolver.query(query, "A")
+                if loop_count_1 == 0:
+                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                    loop_count_1 += 1
+                else:
+                    print_msg = print_msg + ', ' + bl
+            except dns.resolver.NXDOMAIN:
+                loop_count += 1
+            except dns.resolver.NoAnswer:
+                loop_count += 1
+            except dns.resolver.Timeout:
+                loop_count_2 += 1
 
-
-    if input == 'domain':
-        try:
-            my_resolver = dns.resolver.Resolver()
-            answers = my_resolver.query(input_value, "MX")
-            for mx_server in answers:
-                weigth, mail_server = str(mx_server).split(" ")
-                my_resolver1 = dns.resolver.Resolver()
-                mx_ip = my_resolver1.query(mail_server, "A")
-                mxservers.append(mx_ip[0])
-        except dns.resolver.NXDOMAIN:
-            return "This domain does not have a MX Record."
-        except dns.resolver.NoAnswer:
-            return "This domain does not have a MX Record."
-        except dns.resolver.Timeout:
-            return "Not able to find a MX Server."
-
-        count_ip = count_ip_yes = count_bl = count_yes = count_no = 0
-        for server_ip in mxservers:
-            count_ip += 1
-            count_bl = count_yes = count_no = 0
-
-            for bl in bls:
-                count_bl += 1
-                try:
-                    my_resolver = dns.resolver.Resolver()
-                    query = '.'.join(reversed(str(server_ip).split("."))) + "." + bl
-                    answers = my_resolver.query(query, "A")
-                    count_yes += 1
-                except dns.resolver.NXDOMAIN:
-                    count_no += 1
-
-            if count_yes >> 0:
-                count_ip_yes += 1
-        print_msg = print_msg + 'Domain: %s has %s MX Servers found in %s Blacklists!' % (input_value, count_ip, count_ip_yes)
+        if loop_count > 0:
+            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists'
 
     logger.info("SPAM BL OK!")
 
