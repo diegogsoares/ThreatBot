@@ -273,7 +273,7 @@ def CHECK_IP_VT (input_value):
     resp_ip_vt_json = resp_ip_vt.json()
 
     if resp_ip_vt_json['response_code'] == 0:
-        return '\n@VirusTotal no information was found on '+input_value
+        return 'No information was found on '+input_value
 
 
 #    print(json.dumps(resp_ip_vt_json, indent=4, separators=(',', ': ')))
@@ -289,7 +289,7 @@ def CHECK_IP_VT (input_value):
             if ii['positives'] >= 5:
                 ip_samples_count=ip_samples_count+1
 
-    print_msg = "\n@VirusTotal this IP Address hosts " + str(ip_url_count) + " malicious URLs and " + str(ip_samples_count) + " malicious Files!\n"
+    print_msg = "\nThis IP Address hosts " + str(ip_url_count) + " malicious URLs and " + str(ip_samples_count) + " malicious Files!\n"
     print_msg = print_msg + " More information @ https://virustotal.com/en/ip-address/" + input_value + "/information\n"
 
     logger.info("VT OK!")
@@ -312,12 +312,12 @@ def CHECK_DOMAIN_VT (input_value):
     resp_domain_vt_json = resp_domain_vt.json()
 
     if resp_domain_vt_json['response_code'] == 0:
-        return '\n@VirusTotal no information was found on '+input_value
+        return 'No information was found on '+input_value
 
 #    print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
 
     security_category = resp_domain_vt_json.get("categories")
-    print_msg = "\n@VirusTotal " + input_value + " is categorized as " + str(security_category) + "\n"
+    print_msg = " " + input_value + " is categorized as " + str(security_category) + "\n"
 
     url = "http://"+input_value+"/"
     for i in resp_domain_vt_json["detected_urls"]:
@@ -345,7 +345,7 @@ def CHECK_HASH_VT (input_value):
     resp_hash_vt_json = resp_hash_vt.json()
 
     if resp_hash_vt_json.get("response_code") == 0:
-        return "\n@VirusTotal has no information on this file!"
+        return "No information was found on this file!"
 
 #    print(json.dumps(resp_hash_vt_json, indent=4, separators=(',', ': ')))
 
@@ -354,7 +354,7 @@ def CHECK_HASH_VT (input_value):
     vt_clamav = resp_hash_vt_json.get("scans").get("ClamAV").get("detected")
     vt_clamav_name = resp_hash_vt_json.get("scans").get("ClamAV").get("result")
 
-    print_msg = "\n@VirusTotal found " + str(vt_hash_positives) + " positive hits out of " + str(vt_hash_totals) + " scans!\n"
+    print_msg = "We found " + str(vt_hash_positives) + " positive hits out of " + str(vt_hash_totals) + " scans!\n"
 
     if vt_clamav == True:
         print_msg = print_msg + "   ClamAV has detected this hash as " + vt_clamav_name + "\n"
@@ -570,6 +570,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_DOMAIN_VT(in_message)
+            msg_vt_mark = '###@Virus Total \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             msg_bl = CHECK_SPAM_BL(in_message,"domain")
@@ -596,6 +598,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_IP_VT(in_message)
+            msg_vt_mark = '###@Virus Total \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             msg_bl = CHECK_SPAM_BL(in_message, "ip")
@@ -628,6 +632,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
 
             msg_vt = CHECK_HASH_VT(in_message)
+            msg_vt_mark = '###@Virus Total \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
         elif (len(in_message) == 64 and validuser == True):
@@ -650,6 +656,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
             msg_vt = CHECK_HASH_VT(in_message)
+            msg_vt_mark = '###@Virus Total \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
         elif validuser == True:
