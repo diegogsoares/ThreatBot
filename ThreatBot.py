@@ -141,6 +141,8 @@ def CHECK_SPAM_BL (input_value,input):
                 count_ip_yes += 1
         print_msg = print_msg + 'Domain: %s has %s MX Servers found in %s Blacklists!' % (input_value, count_ip, count_ip_yes)
 
+    logger.info("SPAM BL OK!")
+
     return print_msg
 
 ######################################################
@@ -478,6 +480,8 @@ def TALOS_BLOCK_LIST(input_value):
 
     datalist.close()
 
+    logger.info("TALOS BL OK!")
+
     return print_msg
 
 ######################################################
@@ -618,8 +622,8 @@ def index(request):
             msg = "Invalid input!!\n Use IPs, Domains or Hashes."
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
         else:
-            msg = "Unauthorized User!!\n Please contact Diego Soares - disoares@cisco.com to request Access"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
+            msg = "**Unauthorized User!!**\n Please contact Diego Soares - disoares@cisco.com to request Access"
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": msg})
 
     datalist.close()
 
