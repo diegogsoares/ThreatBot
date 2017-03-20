@@ -91,7 +91,7 @@ def CHECK_SPAM_BL (input_value,input):
     print_msg = '\n@SPAM Blacklist:\n'
     loop_count = loop_count_1 = 0
     mxservers = []
-    
+
     if input == 'ip':
         for bl in bls:
             try:
@@ -138,7 +138,7 @@ def CHECK_SPAM_BL (input_value,input):
 
             if count_yes >> 0:
                 count_ip_yes += 1
-        print_msg = print_msg + 'Domain: %s has %s MX Servers found in %s Blacklists!' % (myIP, count_ip, count_ip_yes)
+        print_msg = print_msg + 'Domain: %s has %s MX Servers found in %s Blacklists!' % (input_value, count_ip, count_ip_yes)
 
     return print_msg
 
