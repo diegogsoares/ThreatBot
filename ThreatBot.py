@@ -450,7 +450,7 @@ def CHECK_AMP (input_value,type):
             print_msg = print_msg + '\t\tConnector GUID: ' + str(i['connector_guid']) + " - " +  str(i['links']['computer']) + "\n"
             loop_count += 1
 
-    print_msg = print_msg + "\nMore activity information @ https://console.amp.cisco.com/search?query=" + input_value  + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value  + "/profile/details\n"
+    print_msg = print_msg + "More activity information @ https://console.amp.cisco.com/search?query=" + input_value  + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value  + "/profile/details\n"
 
     logger.info("AMP OK!")
 
@@ -474,9 +474,9 @@ def TALOS_BLOCK_LIST(input_value):
         talos_count += 1
 
     if talos_bl == True:
-        print_msg = "###@Talos IP block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
+        print_msg = "Block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
     else:
-        print_msg = "###@Talos IP block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
+        print_msg = "Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
 
     datalist.close()
 
@@ -566,6 +566,8 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             msg_bl = CHECK_SPAM_BL(in_message,"domain")
+            msg_bl_mark = '###@SPAM Block List \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
         elif (validators.ipv4(in_message) and validuser == True):
@@ -586,10 +588,16 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             msg_bl = CHECK_SPAM_BL(in_message, "ip")
+            msg_bl_mark = '###@SPAM Block List \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
             msg_talos = TALOS_BLOCK_LIST(in_message)
+            msg_talos_mark = '###@Cisco TALOS \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
+
+
 
         elif (len(in_message) == 40 and validuser == True):
             logger.info("SHA1 Hash!!")
@@ -622,7 +630,7 @@ def index(request):
             msg_amp_mark = '###@Cisco AMP \n'
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
-            
+
             msg_vt = CHECK_HASH_VT(in_message)
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
         elif validuser == True:
