@@ -59,7 +59,7 @@ bls = ['b.barracudacentral.org',
     'virus.rbl.msrbl.net', 'phishing.rbl.msrbl.net', 'images.rbl.msrbl.net', 'spam.rbl.msrbl.net', 'combined.rbl.msrbl.net',
     'noptr.spamrats.com', 'dyna.spamrats.com', 'spam.spamrats.com',
     'cbl.anti-spam.org.cn', 'cblless.anti-spam.org.cn', 'cblplus.anti-spam.org.cn',
-    'rbl-plus.mail-abuse.org', 'blackholes.mail-abuse.org', 'dialups.mail-abuse.org',
+    'rbl-plus.mail-abuse.org', 'dialups.mail-abuse.org',
     'psbl.surriel.com',
     'rbl.spamlab.com',
     'dnsbl.inps.de',
@@ -93,7 +93,6 @@ bls = ['b.barracudacentral.org',
     'blackholes.five-ten-sg.com',
     'dnsbl.kempt.net',
     'blacklist.woody.ch',
-    'rot.blackhole.cantv.net',
     'spamlist.or.kr',
     'dnsbl.abuse.ch',
     'bl.deadbeef.com',
@@ -109,7 +108,6 @@ bls = ['b.barracudacentral.org',
     'duinv.aupads.org',
     'residential.block.transip.nl',
     'dynip.rothen.com',
-    'dul.blackhole.cantv.net',
     'mail.people.it',
     'spam.abuse.ch',
     'db.wpbl.info']
@@ -155,6 +153,7 @@ def CHECK_SPAM_BL (input_value,input):
             try:
                 my_resolver = dns.resolver.Resolver()
 #                my_resolver.nameservers = ['208.67.222.222']
+                my_resolver.timeout = 3
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
@@ -179,6 +178,7 @@ def CHECK_SPAM_BL (input_value,input):
             try:
                 my_resolver = dns.resolver.Resolver()
 #                my_resolver.nameservers = ['208.67.222.222']
+                my_resolver.timeout = 3
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
