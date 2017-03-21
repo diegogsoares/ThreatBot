@@ -327,7 +327,7 @@ def CHECK_IP_VT (input_value):
 
     resp_ip_vt_json = resp_ip_vt.json()
 
-    if resp_ip_vt_json['response_code'] == 0:
+    if resp_ip_vt_json.get("response_code") == 0:
         return 'No information was found on '+input_value
 
 
@@ -366,7 +366,7 @@ def CHECK_DOMAIN_VT (input_value):
 
     resp_domain_vt_json = resp_domain_vt.json()
 
-    if resp_domain_vt_json['response_code'] == 0:
+    if resp_domain_vt_json.get("response_code") == 0:
         return 'No information was found on '+input_value
 
     print(json.dumps(resp_domain_vt_json, indent=4, separators=(',', ': ')))
@@ -655,15 +655,15 @@ def index(request):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
-            msg_vt = CHECK_IP_VT(in_message)
-            msg_vt_mark = '###@Virus Total \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
-
             msg_talos = TALOS_BLOCK_LIST(in_message)
             msg_talos_mark = '###@Cisco TALOS \n'
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
+
+            msg_vt = CHECK_IP_VT(in_message)
+            msg_vt_mark = '###@Virus Total \n'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             msg_bl = CHECK_SPAM_BL(in_message, "ip")
             msg_bl_mark = '###@SPAM Block List \n'
