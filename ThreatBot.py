@@ -212,12 +212,15 @@ def CHECK_DOMAIN_ODNS (input_value):
     resp_samples = requests.get(odns_uri + odns_samples_url + input_value, headers=investigate_header)
 
     if resp_category.status_code != 200:
+        logger.info("Category ONDS FAIL! -  " + str(resp_category.status_code))
         return "Umbrella Error: API Call Status " + str(resp_category.status_code)
 
     if resp_secscore.status_code != 200:
+        logger.info("Sec. Score ONDS FAIL! -  " + str(resp_secscore.status_code))
         return "Umbrella Error: API Call Status " + str(resp_secscore.status_code)
 
     if resp_samples.status_code != 200:
+        logger.info("Samples ONDS FAIL! -  " + str(resp_samples.status_code))
         return "Umbrella Error: API Call Status " + str(resp_samples.status_code)
 
     resp_category_json=resp_category.json()
@@ -291,6 +294,7 @@ def CHECK_HASH_ODNS (input_value):
     resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
 
     if resp_hash.status_code != 200:
+        logger.info("HASH ONDS FAIL! -  " + str(resp_hash.status_code))
         return "Umbrella Error: API Call Status " + str(resp_hash.status_code)
 
     resp_hash_json = resp_hash.json()
@@ -323,6 +327,7 @@ def CHECK_IP_VT (input_value):
     resp_ip_vt = requests.get(VT_IP_URL, params=VT_IP_PARAMTERS)
 
     if resp_ip_vt.status_code != 200:
+        logger.info("IP VT FAIL! -  " + str(resp_ip_vt.status_code))
         return "VirusTotal Error: API Call Status " + str(resp_ip_vt.status_code)
 
     resp_ip_vt_json = resp_ip_vt.json()
@@ -362,6 +367,7 @@ def CHECK_DOMAIN_VT (input_value):
     resp_domain_vt = requests.get(VT_DOMAIN_URL, params=VT_DOMAIN_PARAMTERS, verify=False)
 
     if resp_domain_vt.status_code != 200:
+        logger.info("Domain VT FAIL! -  " + str(resp_domain_vt.status_code))
         return "VirusTotal Error: API Call Status " + str(resp_domain_vt.status_code)
 
     resp_domain_vt_json = resp_domain_vt.json()
@@ -395,6 +401,7 @@ def CHECK_HASH_VT (input_value):
     resp_hash_vt = requests.post(VT_HASH_URL, headers=VT_HEADERS, params=VT_HASH_PARAMTERS)
 
     if resp_hash_vt.status_code != 200:
+        logger.info("HASH VT FAIL! -  " + str(resp_hash_vt.status_code))
         return "VirusTotal Error: API Call Status " + str(resp_hash_vt.status_code)
 
     resp_hash_vt_json = resp_hash_vt.json()
@@ -431,6 +438,7 @@ def CHECK_QUERY_TG (input_value,input):
     resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
 
     if resp_ip_tg.status_code != 200:
+        logger.info("TG FAIL! -  " + str(resp_ip_tg.status_code))
         return "ThreatGrig Error: API Call Status " + str(resp_ip_tg.status_code)
 
     resp_ip_tg_json = resp_ip_tg.json()
@@ -472,6 +480,7 @@ def CHECK_AMP (input_value,type):
     resp_amp = requests.get(amp_url_pc+input_value, headers=amp_header)
 
     if resp_amp.status_code != 200:
+        logger.info("AMP FAIL! -  " + str(resp_amp.status_code))
         return "AMP Error: API Call Status " + str(resp_amp.status_code)
 
     resp_amp_json = resp_amp.json()
@@ -481,6 +490,7 @@ def CHECK_AMP (input_value,type):
     if type == 'hash256':
         resp_amp_hash = requests.get(amp_url_hash + input_value, headers=amp_header)
         if resp_amp_hash.status_code != 200:
+            logger.info("HASH AMP FAIL! -  " + str(resp_amp_hash.status_code))
             return "AMP Error: API Call Status " + str(resp_amp_hash.status_code)
         resp_amp_hash_json = resp_amp_hash.json()
         count=0
