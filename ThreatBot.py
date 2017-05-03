@@ -219,7 +219,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["security_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is in the Block List!\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is **Blocked!**\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -235,7 +235,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["content_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is **Good!**\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -248,7 +248,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     else:
-        print_msg = " " + input_value + " is Unclassified!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is **Unclassified**!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json.get("totalResults"):
             totalresults = str(resp_samples_json.get("totalResults"))
@@ -632,10 +632,10 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_amp= CHECK_AMP(in_message[1],"domain")
-                msg_amp_mark = '###@Cisco AMP \n'
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+#                msg_amp= CHECK_AMP(in_message[1],"domain")
+#                msg_amp_mark = '###@Cisco AMP \n'
+#                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+#                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
                 msg_vt = CHECK_DOMAIN_VT(in_message[1])
                 msg_vt_mark = '###@Virus Total \n'
@@ -648,7 +648,7 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
             elif (validators.ipv4(in_message[1]) and validuser == True):
-    #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+#                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
                 msg_odns = CHECK_DOMAIN_ODNS(in_message)
                 msg_odns_mark = '###@Cisco Umbrella \n'
@@ -660,10 +660,10 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_amp= CHECK_AMP(in_message[1],"ip")
-                msg_amp_mark = '###@Cisco AMP \n'
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+#                msg_amp= CHECK_AMP(in_message[1],"ip")
+#                msg_amp_mark = '###@Cisco AMP \n'
+#                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+#                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
                 msg_talos = TALOS_BLOCK_LIST(in_message[1])
                 msg_talos_mark = '###@Cisco TALOS \n'
