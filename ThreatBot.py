@@ -141,7 +141,7 @@ def CHECK_SPAM_BL (input_value,input):
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
-                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + '\n'
                     loop_count_1 += 1
                 else:
                     print_msg = print_msg + ', ' + bl
@@ -154,7 +154,7 @@ def CHECK_SPAM_BL (input_value,input):
                 print (bl)
 
         if loop_count > 0:
-            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
+            print_msg = print_msg + 'IP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
 
     elif input == 'domain':
         for bl in bls:
@@ -166,7 +166,7 @@ def CHECK_SPAM_BL (input_value,input):
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")
                 if loop_count_1 == 0:
-                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl
+                    print_msg = print_msg + 'IP: ' + input_value + ' IS listed in ' + bl + '\n'
                     loop_count_1 += 1
                 else:
                     print_msg = print_msg + ', ' + bl
@@ -178,7 +178,7 @@ def CHECK_SPAM_BL (input_value,input):
                 loop_count_2 += 1
 
         if loop_count > 0:
-            print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
+            print_msg = print_msg + 'IP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
 
     logger.info("SPAM BL OK!")
     print("SPAM BL OK!")
@@ -625,7 +625,7 @@ def index(request):
                 msg_odns = CHECK_DOMAIN_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"domain")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -653,7 +653,7 @@ def index(request):
                 msg_odns = CHECK_DOMAIN_ODNS(in_message)
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"ip")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -687,7 +687,7 @@ def index(request):
                 msg_odns = CHECK_HASH_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"hash")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -709,7 +709,7 @@ def index(request):
                 msg_odns = CHECK_HASH_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"hash")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
