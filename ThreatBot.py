@@ -181,6 +181,7 @@ def CHECK_SPAM_BL (input_value,input):
             print_msg = print_msg + '\nIP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
 
     logger.info("SPAM BL OK!")
+    print("SPAM BL OK!")
 
     return print_msg
 
@@ -264,7 +265,8 @@ def CHECK_DOMAIN_ODNS (input_value):
 
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
-    logger.info("ONDS OK!")
+    logger.info("ONDS DOMAIN OK!")
+    print("ONDS DOMAIN OK!")
 
     return print_msg
 
@@ -296,7 +298,8 @@ def CHECK_HASH_ODNS (input_value):
         print_msg = print_msg + "\t\t" + i['name'] + "\n"
     print_msg = print_msg + " More information @ https://investigate.umbrella.com/sample-view/" + input_value + "\n"
 
-    logger.info("ONDS OK!")
+    logger.info("ONDS HASH OK!")
+    print("ONDS HASH OK!")
 
     return print_msg
 
@@ -336,7 +339,8 @@ def CHECK_IP_VT (input_value):
     print_msg = "This IP Address hosts " + str(ip_url_count) + " malicious URLs and " + str(ip_samples_count) + " malicious Files!\n"
     print_msg = print_msg + " More information @ https://virustotal.com/en/ip-address/" + input_value + "/information\n"
 
-    logger.info("VT OK!")
+    logger.info("VT HASH OK!")
+    print("VT HASH OK!")
 
     return print_msg
 
@@ -370,7 +374,8 @@ def CHECK_DOMAIN_VT (input_value):
             print_msg = print_msg + " "+ str(i['positives']) + " where found bad out of " + str(i['total']) + "\n"
     print_msg = print_msg + " More information @ https://virustotal.com/en/domain/" + input_value + "/information\n"
 
-    logger.info("VT OK!")
+    logger.info("VT HASH OK!")
+    print("VT HASH OK!")
 
     return print_msg
 
@@ -407,7 +412,9 @@ def CHECK_HASH_VT (input_value):
 
     print_msg = print_msg + " More information @ https://virustotal.com/en/file/" + resp_hash_vt_json.get("sha256") + "/analysis\n"
 
-    logger.info("VT OK!")
+    logger.info("VT HASH OK!")
+    print("VT HASH OK!")
+
 
     return print_msg
 
@@ -451,6 +458,8 @@ def CHECK_QUERY_TG (input_value,input):
         print_msg = print_msg + " More information @ https://panacea.threatgrid.com/mask/#/search/samples?term=freeform&q=" + input_value + "\n"
 
     logger.info("TG OK!")
+    print("TG OK!")
+
 
     return print_msg
 
@@ -508,6 +517,8 @@ def CHECK_AMP (input_value,type):
         print_msg = print_msg + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value + "/profile/details\n"
 
     logger.info("AMP OK!")
+    print("AMP OK!")
+
 
     return print_msg
 
@@ -536,6 +547,7 @@ def TALOS_BLOCK_LIST(input_value):
     datalist.close()
 
     logger.info("TALOS BL OK!")
+    print("TALOS BL OK!")
 
     return print_msg
 
@@ -602,122 +614,141 @@ def index(request):
         logger.info(webhook['data']['personEmail'])
         logger.info(in_message)
 
-        if (validators.domain(in_message) and validuser == True):
-            logger.info("DOMAIN!!")
-#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+        in_message.split(“ ”)
 
-            msg_odns = CHECK_DOMAIN_ODNS(in_message)
-            msg_odns_mark = '###@Cisco Umbrella \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+        if (in_message[0] == '/intel' and validuser == True):
 
-            msg_tg = CHECK_QUERY_TG(in_message,"domain")
-            msg_tg_mark = '###@Cisco ThreatGrid \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
+            if (validators.domain(in_message) and validuser == True):
+                logger.info("DOMAIN!!")
+    #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
-            msg_amp= CHECK_AMP(in_message   ,"domain")
-            msg_amp_mark = '###@Cisco AMP \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+                msg_odns = CHECK_DOMAIN_ODNS(in_message)
+                msg_odns_mark = '###@Cisco Umbrella \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
-            msg_vt = CHECK_DOMAIN_VT(in_message)
-            msg_vt_mark = '###@Virus Total \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+                msg_tg = CHECK_QUERY_TG(in_message,"domain")
+                msg_tg_mark = '###@Cisco ThreatGrid \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-            msg_bl = CHECK_SPAM_BL(in_message,"domain")
-            msg_bl_mark = '###@SPAM Block List \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
+                msg_amp= CHECK_AMP(in_message   ,"domain")
+                msg_amp_mark = '###@Cisco AMP \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
-        elif (validators.ipv4(in_message) and validuser == True):
-#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+                msg_vt = CHECK_DOMAIN_VT(in_message)
+                msg_vt_mark = '###@Virus Total \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
-            msg_odns = CHECK_DOMAIN_ODNS(in_message)
-            msg_odns_mark = '###@Cisco Umbrella \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                msg_bl = CHECK_SPAM_BL(in_message,"domain")
+                msg_bl_mark = '###@SPAM Block List \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
-            msg_tg = CHECK_QUERY_TG(in_message,"ip")
-            msg_tg_mark = '###@Cisco ThreatGrid \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
+            elif (validators.ipv4(in_message) and validuser == True):
+    #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
-            msg_amp= CHECK_AMP(in_message,"ip")
-            msg_amp_mark = '###@Cisco AMP \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+                msg_odns = CHECK_DOMAIN_ODNS(in_message)
+                msg_odns_mark = '###@Cisco Umbrella \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
-            msg_talos = TALOS_BLOCK_LIST(in_message)
-            msg_talos_mark = '###@Cisco TALOS \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
+                msg_tg = CHECK_QUERY_TG(in_message,"ip")
+                msg_tg_mark = '###@Cisco ThreatGrid \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-            msg_vt = CHECK_IP_VT(in_message)
-            msg_vt_mark = '###@Virus Total \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+                msg_amp= CHECK_AMP(in_message,"ip")
+                msg_amp_mark = '###@Cisco AMP \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
-            msg_bl = CHECK_SPAM_BL(in_message, "ip")
-            msg_bl_mark = '###@SPAM Block List \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
+                msg_talos = TALOS_BLOCK_LIST(in_message)
+                msg_talos_mark = '###@Cisco TALOS \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
 
-        elif (len(in_message) == 40 and validuser == True):
-            logger.info("SHA1 Hash!!")
-#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+                msg_vt = CHECK_IP_VT(in_message)
+                msg_vt_mark = '###@Virus Total \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
-            msg_odns = CHECK_HASH_ODNS(in_message)
-            msg_odns_mark = '###@Cisco Umbrella \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                msg_bl = CHECK_SPAM_BL(in_message, "ip")
+                msg_bl_mark = '###@SPAM Block List \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
-            msg_tg = CHECK_QUERY_TG(in_message,"hash")
-            msg_tg_mark = '###@Cisco ThreatGrid \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
+            elif (len(in_message) == 40 and validuser == True):
+                logger.info("SHA1 Hash!!")
+    #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
-            msg_amp_mark = "###@Cisco AMP \n Use SHA-256 Hashes!"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+                msg_odns = CHECK_HASH_ODNS(in_message)
+                msg_odns_mark = '###@Cisco Umbrella \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
-            msg_vt = CHECK_HASH_VT(in_message)
-            msg_vt_mark = '###@Virus Total \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+                msg_tg = CHECK_QUERY_TG(in_message,"hash")
+                msg_tg_mark = '###@Cisco ThreatGrid \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-        elif (len(in_message) == 64 and validuser == True):
-            logger.info("SHA256 Hash!!")
-#            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
+                msg_amp_mark = "###@Cisco AMP \n Use SHA-256 Hashes!"
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
 
-            msg_odns = CHECK_HASH_ODNS(in_message)
-            msg_odns_mark = '###@Cisco Umbrella \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                msg_vt = CHECK_HASH_VT(in_message)
+                msg_vt_mark = '###@Virus Total \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
-            msg_tg = CHECK_QUERY_TG(in_message,"hash")
-            msg_tg_mark = '###@Cisco ThreatGrid \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
+            elif (len(in_message) == 64 and validuser == True):
+                logger.info("SHA256 Hash!!")
+    #            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
-            msg_amp= CHECK_AMP(in_message,"hash256")
-            msg_amp_mark = '###@Cisco AMP \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+                msg_odns = CHECK_HASH_ODNS(in_message)
+                msg_odns_mark = '###@Cisco Umbrella \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
-            msg_vt = CHECK_HASH_VT(in_message)
-            msg_vt_mark = '###@Virus Total \n'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+                msg_tg = CHECK_QUERY_TG(in_message,"hash")
+                msg_tg_mark = '###@Cisco ThreatGrid \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
+
+                msg_amp= CHECK_AMP(in_message,"hash256")
+                msg_amp_mark = '###@Cisco AMP \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+
+                msg_vt = CHECK_HASH_VT(in_message)
+                msg_vt_mark = '###@Virus Total \n'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+
+            elif validuser == True:
+                msg_mark = "###Invalid input!! \n Use IPs, Domains or Hashes.\n\n This tool was created with the intent to search Cisco Threat Intel and some free market sources. " \
+                           "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
+                           "\n- IP: 1.1.1.1\n- Domain: cisco.com\n- File Hashes(*prefer SHA-256): 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370\n"
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+            else:
+                msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+
+        elif (in_message[0] == '/activity' and validuser == True):
+            msg_mark = "UNDER CONSTRUCTION\n"
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
 
         elif validuser == True:
-            msg_mark = "###Invalid input!! \n Use IPs, Domains or Hashes.\n\n This tool was created with the intent to search Cisco Threat Intel and some free market sources. " \
+            msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
                        "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
-                       "\n- IP: 1.1.1.1\n- Domain: cisco.com\n- File Hashes(*prefer SHA-256): 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370\n"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+                       "\n- /activity IP: 1.1.1.1\n- Domain: cisco.com\n- File Hashes(*prefer SHA-256): 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370\n"
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
         else:
             msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
-            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
 
     datalist.close()
 
