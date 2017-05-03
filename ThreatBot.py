@@ -219,7 +219,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["security_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is **Blocked!**\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Blocked!\n It's security score is: " + secure_score + "\n It' IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -235,7 +235,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         security_category = ""
         for i in resp_category_json[input_value]["content_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is **Good!**\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -248,7 +248,7 @@ def CHECK_DOMAIN_ODNS (input_value):
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     else:
-        print_msg = " " + input_value + " is **Unclassified**!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
+        print_msg = " " + input_value + " is Unclassified!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n"
 
         if resp_samples_json.get("totalResults"):
             totalresults = str(resp_samples_json.get("totalResults"))
@@ -625,7 +625,7 @@ def index(request):
                 msg_odns = CHECK_DOMAIN_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"domain")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -653,7 +653,7 @@ def index(request):
                 msg_odns = CHECK_DOMAIN_ODNS(in_message)
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"ip")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -687,7 +687,7 @@ def index(request):
                 msg_odns = CHECK_HASH_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"hash")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
@@ -709,7 +709,7 @@ def index(request):
                 msg_odns = CHECK_HASH_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"hash")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
