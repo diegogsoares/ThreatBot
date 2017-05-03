@@ -727,9 +727,9 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
 
             elif validuser == True:
-                msg_mark = "###Invalid input!! \n Use IPs, Domains or Hashes.\n\n This tool was created with the intent to search Cisco Threat Intel and some free market sources. " \
+                msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
                            "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
-                           "\n- IP: 1.1.1.1\n- Domain: cisco.com\n- File Hashes(*prefer SHA-256): 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370\n"
+                           "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes:** /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370    (*prefer SHA-256)\n"
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
             else:
                 msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
@@ -742,7 +742,7 @@ def index(request):
         elif validuser == True:
             msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
                        "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
-                       "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes**(*prefer SHA-256): /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370\n"
+                       "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes:** /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370    (*prefer SHA-256)\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
                           {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
         else:
