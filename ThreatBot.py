@@ -614,8 +614,8 @@ def index(request):
         logger.info(webhook['data']['personEmail'])
         logger.info(in_message)
 
-        in_message.split(“ ”)
-
+        in_message = in_message.split(' ')
+        
         if (in_message[0] == '/intel' and validuser == True):
 
             if (validators.domain(in_message) and validuser == True):
