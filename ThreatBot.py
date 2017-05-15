@@ -50,19 +50,16 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
 ### IP Blacklists
-bls = ['b.barracudacentral.org',
-    'cbl.abuseat.org',
+bls = [cbl.abuseat.org',
     'http.dnsbl.sorbs.net', 'misc.dnsbl.sorbs.net', 'socks.dnsbl.sorbs.net', 'web.dnsbl.sorbs.net', 'dnsbl.sorbs.net',
     'dul.dnsbl.sorbs.net', 'smtp.dnsbl.sorbs.net', 'spam.dnsbl.sorbs.net',
     'sbl.spamhaus.org', 'zen.spamhaus.org', 'dbl.spamhaus.org', 'pbl.spamhaus.org', 'xbl.spamhaus.org',
     'phishing.rbl.msrbl.net', 'spam.rbl.msrbl.net', 'combined.rbl.msrbl.net',
     'noptr.spamrats.com', 'dyna.spamrats.com', 'spam.spamrats.com',
     'dialups.mail-abuse.org',
-    'psbl.surriel.com',
     'rbl.spamlab.com',
     'dnsbl.inps.de',
     'ips.backscatterer.org',
-    'opm.tornevall.org',
     'multi.surbl.org',
     'bl.spamcop.net',
     'bl.spamcannibal.org',
@@ -71,14 +68,7 @@ bls = ['b.barracudacentral.org',
     'blacklist.woody.ch',
     'dnsbl.abuse.ch',
     'ubl.lashback.com',
-    'bsb.spamlookup.net',
-    'dob.sibl.support-intelligence.net',
-    'orvedb.aupads.org',
-    'relays.nether.net',
-    'duinv.aupads.org',
-    'residential.block.transip.nl',
-    'dynip.rothen.com',
-    'db.wpbl.info']
+    'bsb.spamlookup.net']
 
 ### LGOGOs
 cisco_logo = 'http://www.cisco.com/web/europe/images/email/signature/logo02.jpg'
