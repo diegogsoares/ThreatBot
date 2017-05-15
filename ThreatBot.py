@@ -650,7 +650,7 @@ def index(request):
             elif (validators.ipv4(in_message[1]) and validuser == True):
 #                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "files": cisco_logo})
 
-                msg_odns = CHECK_DOMAIN_ODNS(in_message)
+                msg_odns = CHECK_DOMAIN_ODNS(in_message[1])
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
