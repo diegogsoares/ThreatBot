@@ -50,7 +50,7 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
 ### IP Blacklists
-bls = [cbl.abuseat.org',
+bls = ['cbl.abuseat.org',
     'http.dnsbl.sorbs.net', 'misc.dnsbl.sorbs.net', 'socks.dnsbl.sorbs.net', 'web.dnsbl.sorbs.net', 'dnsbl.sorbs.net',
     'dul.dnsbl.sorbs.net', 'smtp.dnsbl.sorbs.net', 'spam.dnsbl.sorbs.net',
     'sbl.spamhaus.org', 'zen.spamhaus.org', 'dbl.spamhaus.org', 'pbl.spamhaus.org', 'xbl.spamhaus.org',
