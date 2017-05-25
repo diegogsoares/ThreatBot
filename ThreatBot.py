@@ -419,9 +419,9 @@ def CHECK_QUERY_TG (input_value,input):
     loop_count =1
 
     for i in resp_ip_tg_json["data"]["items"]:
-        i_json = i.json()
+        #i_json = i.json()
         if loop_count <= 5:
-            print_msg = print_msg + "\t" + str(i_json.get("item").get("sha1")) + " (" + str(i_json.get("item").get("analysis").get("threat_score")) + ") - https://panacea.threatgrid.com/mask/#/samples/" + str(i_json.get("item").get("sample")) + "\n"
+            print_msg = print_msg + "\t" + str(i.get("item").get("sha1")) + " (" + str(i.get("item").get("analysis").get("threat_score")) + ") - https://panacea.threatgrid.com/mask/#/samples/" + str(i.get("item").get("sample")) + "\n"
             loop_count += 1
 
     if input == 'ip':
