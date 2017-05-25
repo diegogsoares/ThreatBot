@@ -16,3 +16,5 @@ spam-bl.py
 *.old
 
 *.blf
+
+amp-web-auth.py
