@@ -51,10 +51,22 @@ tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
 ### IP Blacklists
 bls = ['cbl.abuseat.org',
-    'http.dnsbl.sorbs.net', 'misc.dnsbl.sorbs.net', 'socks.dnsbl.sorbs.net', 'web.dnsbl.sorbs.net', 'dnsbl.sorbs.net',
-    'dul.dnsbl.sorbs.net', 'smtp.dnsbl.sorbs.net', 'spam.dnsbl.sorbs.net',
-    'sbl.spamhaus.org', 'zen.spamhaus.org', 'dbl.spamhaus.org', 'pbl.spamhaus.org', 'xbl.spamhaus.org',
-    'phishing.rbl.msrbl.net', 'spam.rbl.msrbl.net', 'combined.rbl.msrbl.net',
+    'http.dnsbl.sorbs.net',
+    'misc.dnsbl.sorbs.net',
+    'socks.dnsbl.sorbs.net',
+    'web.dnsbl.sorbs.net',
+    'dnsbl.sorbs.net',
+    'dul.dnsbl.sorbs.net',
+    'smtp.dnsbl.sorbs.net',
+    'spam.dnsbl.sorbs.net',
+    'sbl.spamhaus.org',
+    'zen.spamhaus.org',
+    'dbl.spamhaus.org',
+    'pbl.spamhaus.org',
+    'xbl.spamhaus.org',
+    'phishing.rbl.msrbl.net',
+    'spam.rbl.msrbl.net',
+    'combined.rbl.msrbl.net',
     'dialups.mail-abuse.org',
     'rbl.spamlab.com',
     'dnsbl.inps.de',
@@ -128,7 +140,10 @@ def CHECK_SPAM_BL (input_value,input):
 
         if loop_count > 0:
             print_msg = print_msg + 'IP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
-
+            logger.info(loop_count)
+            logger.info(loop_count_1)
+            logger.info(loop_count_2)
+            
     elif input == 'domain':
         for bl in bls:
             bl_count +=1
