@@ -152,9 +152,9 @@ def CHECK_SPAM_BL (input_value,input):
 
         if loop_count > 0:
             print_msg = print_msg + 'IP not listed in ' + str(loop_count) + ' Blacklists out of ' + str(bl_count)
-            print(loop_count)
-            print(loop_count_1)
-            print(loop_count_2)
+            logger.info(loop_count)
+            logger.info(loop_count_1)
+            logger.info(loop_count_2)
 
     logger.info("SPAM BL OK!")
     print("SPAM BL OK!")
