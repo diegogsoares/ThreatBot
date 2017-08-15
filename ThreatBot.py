@@ -175,9 +175,9 @@ def CHECK_SPAM_BL (input_value,input):
 ######################################################
 def CHECK_DOMAIN_ODNS (input_value):
 
-    resp_category = requests.get(odns_uri + odns_category_url + input_value + "?showLabels", headers=investigate_header)
-    resp_secscore = requests.get(odns_uri + odns_secscore_url + input_value + ".json", headers=investigate_header)
-    resp_samples = requests.get(odns_uri + odns_samples_url + input_value, headers=investigate_header)
+    resp_category = requests.get(odns_uri + odns_category_url + input_value + "?showLabels", headers=investigate_header, verify=False)
+    resp_secscore = requests.get(odns_uri + odns_secscore_url + input_value + ".json", headers=investigate_header, verify=False)
+    resp_samples = requests.get(odns_uri + odns_samples_url + input_value, headers=investigate_header, verify=False)
 
     if resp_category.status_code != 200:
         logger.info("Category ONDS FAIL! -  " + str(resp_category.status_code))
@@ -260,7 +260,7 @@ def CHECK_DOMAIN_ODNS (input_value):
 ######################################################
 def CHECK_HASH_ODNS (input_value):
 
-    resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header)
+    resp_hash = requests.get(odns_uri + odns_sample_info_url + input_value, headers=investigate_header, verify=False)
 
     if resp_hash.status_code != 200:
         logger.info("HASH ONDS FAIL! -  " + str(resp_hash.status_code))
@@ -294,7 +294,7 @@ def CHECK_HASH_ODNS (input_value):
 def CHECK_IP_VT (input_value):
 
     VT_IP_PARAMTERS={'ip': input_value, 'apikey': credential.vt_accessToken}
-    resp_ip_vt = requests.get(VT_IP_URL, params=VT_IP_PARAMTERS)
+    resp_ip_vt = requests.get(VT_IP_URL, params=VT_IP_PARAMTERS, verify=False)
 
     if resp_ip_vt.status_code != 200:
         logger.info("IP VT FAIL! -  " + str(resp_ip_vt.status_code))
@@ -370,7 +370,7 @@ def CHECK_DOMAIN_VT (input_value):
 def CHECK_HASH_VT (input_value):
 
     VT_HASH_PARAMTERS={'apikey': credential.vt_accessToken, 'resource': input_value}
-    resp_hash_vt = requests.post(VT_HASH_URL, headers=VT_HEADERS, params=VT_HASH_PARAMTERS)
+    resp_hash_vt = requests.post(VT_HASH_URL, headers=VT_HEADERS, params=VT_HASH_PARAMTERS, verify=False)
 
     if resp_hash_vt.status_code != 200:
         logger.info("HASH VT FAIL! -  " + str(resp_hash_vt.status_code))
@@ -409,7 +409,7 @@ def CHECK_HASH_VT (input_value):
 def CHECK_QUERY_TG (input_value,input):
 
     parameters_ip_tg='api_key='+credential.tg_apikey+'&q='+input_value+'&limit=50'
-    resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
+    resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg, verify=False)
 
     if resp_ip_tg.status_code != 200:
         logger.info("TG FAIL! -  " + str(resp_ip_tg.status_code))
@@ -456,7 +456,7 @@ def CHECK_QUERY_TG (input_value,input):
 ######################################################
 def CHECK_AMP (input_value,type):
 
-    resp_amp = requests.get(amp_url_pc+input_value, headers=amp_header)
+    resp_amp = requests.get(amp_url_pc+input_value, headers=amp_header, verify=False)
 
     if resp_amp.status_code != 200:
         logger.info("AMP FAIL! -  " + str(resp_amp.status_code))
@@ -467,7 +467,7 @@ def CHECK_AMP (input_value,type):
 #    print(json.dumps(resp_amp_json, indent=4, separators=(',', ': ')))
 
     if type == 'hash256':
-        resp_amp_hash = requests.get(amp_url_hash + input_value, headers=amp_header)
+        resp_amp_hash = requests.get(amp_url_hash + input_value, headers=amp_header, verify=False)
         if resp_amp_hash.status_code != 200:
             logger.info("HASH AMP FAIL! -  " + str(resp_amp_hash.status_code))
             return "AMP Error: API Call Status " + str(resp_amp_hash.status_code)
