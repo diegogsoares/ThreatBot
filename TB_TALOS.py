@@ -34,6 +34,32 @@ def TALOS_BLOCK_LIST(input_value):
     logger.info("TALOS BL OK!")
     print("TALOS BL OK!")
 
+    ############
+
+    browser.open(url_ip)
+
+    page = BeautifulSoup(str(browser.parsed), "lxml")
+    table = page.find("table", {"class": "customvt"})
+
+    rows = cells = list()
+    for rows in table.findAll("tr"):
+        row = BeautifulSoup(str(rows), "lxml").text
+        if "Talos" in row:
+            cellsTalos = rows.findAll("td")
+            scoreTalos = cellsTalos[1].findAll("p")
+            for line in cellsTalos[1]:
+                if "Status:" in line:
+                    statusTalos = line.strip()
+            cleanTalosscore = BeautifulSoup(str(scoreTalos), "lxml").text
+            if cleanTalosscore != '[]':
+                print_msg = print_msg + "Talos Category:" + str(cleanTalosscore)
+                print_msg = print_msg + "\nTalos " + statusTalos
+            else:
+                return ("Unknown to Talos!")
+
+    logger.info("TALOS AMPTOOLBOX OK!")
+    print("TALOS AMPTOOLBOX OK!")
+
     return print_msg
 
 ######################################################
