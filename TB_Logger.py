@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 # create a file handler
-handler = logging.FileHandler('ThreatBot.log')
+handler = logging.FileHandler('TB_ThreatBot.log')
 handler.setLevel(logging.INFO)
 
 # create a logging format
