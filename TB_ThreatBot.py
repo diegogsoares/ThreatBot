@@ -42,28 +42,23 @@ def sendSparkGET(url):
         -retrieving message text, when the webhook is triggered with a message
             -Getting the username of the person who posted the message if a command is recognized
     """
-    spark_header = {"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + credential.spark_bearer}
+    request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
+    contents = urllib2.urlopen(request).read()
 
-    read_contents = requests.get(url, headers=spark_header)
-    if read_contents.status_code != 200:
-        logger.info("SPARK MSG GET FAIL! -  " + str(read_contents.status_code))
-        return "SPARK Error: API Call ERROR " + str(read_contents.status_code)
-
-    return read_contents
+    return contents
 
 def sendSparkPOST(url, data):
     """
         This method is used for:
             -posting a message to the Spark room to confirm that a command was received and processed
     """
-    spark_header = {"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + credential.spark_bearer}
+    request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
+    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
+    contents = urllib2.urlopen(request).read()
 
-    post_contents = requests.post(url, json.dumps(data), headers=spark_header)
-    if post_contents.status_code != 200:
-        logger.info("SPARK MSG GET FAIL! -  " + str(post_contents.status_code))
-        return "SPARK Error: API Call ERROR " + str(post_contents.status_code)
+    return contents
 
-    return post_contents
 
 ######################################################
 ##########
@@ -81,7 +76,6 @@ def index(request):
     webhook = json.loads(request.body)
     print(webhook['data']['id'])
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
-    print (result)
     result = json.loads(result)
 
     msg = None
