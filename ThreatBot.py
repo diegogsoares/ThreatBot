@@ -49,36 +49,36 @@ amp_url_hash = 'https://api.amp.cisco.com/v1/events?application_sha256='
 ### API URLs - ThreatGrid
 tg_url = 'https://panacea.threatgrid.com/api/v2/'
 
-### IP Blacklists
-bls = ['cbl.abuseat.org',
-    'http.dnsbl.sorbs.net',
-    'misc.dnsbl.sorbs.net',
-    'socks.dnsbl.sorbs.net',
-    'web.dnsbl.sorbs.net',
-    'dnsbl.sorbs.net',
-    'dul.dnsbl.sorbs.net',
-    'smtp.dnsbl.sorbs.net',
-    'spam.dnsbl.sorbs.net',
-    'sbl.spamhaus.org',
-    'zen.spamhaus.org',
-    'dbl.spamhaus.org',
-    'pbl.spamhaus.org',
-    'xbl.spamhaus.org',
-    'phishing.rbl.msrbl.net',
-    'spam.rbl.msrbl.net',
-    'combined.rbl.msrbl.net',
-    'dialups.mail-abuse.org',
-    'rbl.spamlab.com',
-    'dnsbl.inps.de',
-    'ips.backscatterer.org',
-    'multi.surbl.org',
-    'bl.spamcop.net',
-    'bl.spamcannibal.org',
-    'query.senderbase.org',
-    'blacklist.woody.ch',
-    'dnsbl.abuse.ch',
-    'ubl.lashback.com',
-    'bsb.spamlookup.net']
+    ### IP Blacklists
+    bls = ['cbl.abuseat.org',
+        'http.dnsbl.sorbs.net',
+        'misc.dnsbl.sorbs.net',
+        'socks.dnsbl.sorbs.net',
+        'web.dnsbl.sorbs.net',
+        'dnsbl.sorbs.net',
+        'dul.dnsbl.sorbs.net',
+        'smtp.dnsbl.sorbs.net',
+        'spam.dnsbl.sorbs.net',
+        'sbl.spamhaus.org',
+        'zen.spamhaus.org',
+        'dbl.spamhaus.org',
+        'pbl.spamhaus.org',
+        'xbl.spamhaus.org',
+        'phishing.rbl.msrbl.net',
+        'spam.rbl.msrbl.net',
+        'combined.rbl.msrbl.net',
+        'dialups.mail-abuse.org',
+        'rbl.spamlab.com',
+        'dnsbl.inps.de',
+        'ips.backscatterer.org',
+        'multi.surbl.org',
+        'bl.spamcop.net',
+        'bl.spamcannibal.org',
+        'query.senderbase.org',
+        'blacklist.woody.ch',
+        'dnsbl.abuse.ch',
+        'ubl.lashback.com',
+        'bsb.spamlookup.net']
 
 ### LGOGOs
 cisco_logo = 'http://www.cisco.com/web/europe/images/email/signature/logo02.jpg'
@@ -120,7 +120,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-#                my_resolver.nameservers = ['208.67.222.222']
+                my_resolver.nameservers = ['208.67.222.222']
                 my_resolver.timeout = 3
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
@@ -144,7 +144,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-#                my_resolver.nameservers = ['208.67.222.222']
+                my_resolver.nameservers = ['208.67.222.222']
                 my_resolver.timeout = 3
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")

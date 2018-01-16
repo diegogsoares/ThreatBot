@@ -30,3 +30,7 @@ TB_VT.py
 ThreatBot.old.py
 
 credential copy.py
+
+*.log
+
+*.pyc
