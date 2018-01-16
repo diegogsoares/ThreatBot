@@ -58,7 +58,7 @@ def TALOS_BLOCK_LIST(input_value):
                     statusTalos = line.strip()
             cleanTalosscore = BeautifulSoup(str(scoreTalos), "lxml").text
             if cleanTalosscore != '[]':
-                print_msg = print_msg + "Talos Category:" + str(cleanTalosscore)
+                print_msg = print_msg + "\nTalos Category:" + str(cleanTalosscore)
                 print_msg = print_msg + "\nTalos " + statusTalos
             else:
                 return ("Unknown to Talos!")
