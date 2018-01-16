@@ -228,4 +228,4 @@ def index(request):
 
     return "true"
 
-run_itty(server='wsgiref', host='0.0.0.0', port=10011)
+run_itty(server='wsgiref', host='0.0.0.0', port=10010)
