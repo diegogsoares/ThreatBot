@@ -2,6 +2,7 @@ import json
 import requests
 import validators
 from itty import *
+import urllib2
 
 
 requests.packages.urllib3.disable_warnings()
