@@ -36,6 +36,12 @@ def TALOS_BLOCK_LIST(input_value):
 
     ############
 
+    s = requests.Session()
+    browser = RoboBrowser(session=s)
+    browser = RoboBrowser(parser='html.parser')
+
+    url_ip = "https://amptools.cisco.com/network.php?query="+input_value
+
     browser.open(url_ip)
 
     page = BeautifulSoup(str(browser.parsed), "lxml")
