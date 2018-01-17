@@ -35,6 +35,8 @@ def CHECK_AMPTOOLBOX (input_value):
     if resp_toolbox_json.get("threat_name") != None:
         print_msg = print_msg + " and threat name is " + str(resp_toolbox_json.get("threat_name"))
 
+    print_msg = print_msg + "\nMore about file details @ https://console.amp.cisco.com/file/" + input_value + "/profile/details\n"
+    
     return print_msg
 
 
