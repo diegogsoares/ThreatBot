@@ -104,7 +104,7 @@ def index(request):
             if (validators.domain(in_message[1]) and validuser == True):
                 logger.info("DOMAIN!!")
 
-                msg_odns = CHECK_DOMAIN_ODNS(in_message[1])
+                msg_odns = CHECK_DOMAIN_ODNS(in_message[1],"domain")
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
@@ -127,7 +127,7 @@ def index(request):
             elif (validators.ipv4(in_message[1]) and validuser == True):
                 logger.info("IP!!")
 
-                msg_odns = CHECK_DOMAIN_ODNS(in_message[1])
+                msg_odns = CHECK_DOMAIN_ODNS(in_message[1],"ip")
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
