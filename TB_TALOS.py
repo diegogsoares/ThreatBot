@@ -20,7 +20,7 @@ def TALOS_BLOCK_LIST(input_value,type):
     if type == "domain":
         try:
             my_resolver = dns.resolver.Resolver()
-            my_resolver.nameservers = ['8.8.8.8']
+#            my_resolver.nameservers = ['8.8.8.8']
             my_resolver.timeout = 3
             answers = my_resolver.query(input_value, "A")
             input_value = str(answers[0])

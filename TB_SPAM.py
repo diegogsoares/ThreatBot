@@ -54,7 +54,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-                my_resolver.nameservers = ['208.67.222.222']
+#                my_resolver.nameservers = ['208.67.222.222']
                 my_resolver.timeout = 3
                 query = '.'.join(reversed(str(input_value).split("."))) + "." + bl
                 answers = my_resolver.query(query, "A")
@@ -79,7 +79,7 @@ def CHECK_SPAM_BL (input_value,input):
             bl_count +=1
             try:
                 my_resolver = dns.resolver.Resolver()
-                my_resolver.nameservers = ['208.67.222.222']
+ #               my_resolver.nameservers = ['208.67.222.222']
                 my_resolver.timeout = 3
                 query = input_value + bl
                 answers = my_resolver.query(query, "A")
