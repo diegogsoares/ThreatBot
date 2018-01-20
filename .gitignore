@@ -7,10 +7,6 @@ diegogsoares
 
 spam-bl.py
 
-*.old
-
-*.blf
-
 amp-toolbox-file.py
 
 amp-toolbox-ip_domain.py
@@ -22,3 +18,7 @@ credential copy.py
 *.log
 
 *.pyc
+
+*.old
+
+*.blf
