@@ -116,7 +116,7 @@ def TALOS_BLOCK_LIST(input_value,type):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-#'''
+'''
 
 if sys.argv[1] == '-ip':
     msg_to_print, msg_to_print2 = TALOS_BLOCK_LIST(sys.argv[2],"ip")
