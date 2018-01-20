@@ -101,7 +101,7 @@ def TALOS_BLOCK_LIST(input_value,type):
                 print_msg_BC = print_msg_BC + "BrightCloud Category: Unknown"
 
 
-    logger.info("TALOS AMPTOOLBOX OK!!")
+    logger.info("TALOS AMPTOOLBOX OK!")
     print("TALOS AMPTOOLBOX OK!")
 
     if type == "ip":
