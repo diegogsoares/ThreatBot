@@ -65,7 +65,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
         security_category = ""
         for i in resp_category_json[input_value]["security_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is Blocked!\n * Security score is: " + secure_score + "\n * It's IP reputation is: " + rip_score + "\n * IP popularity is: " + popularity_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Blocked!\n * Security score is: " + secure_score + "\n * IP reputation is: " + rip_score + "\n * IP popularity is: " + popularity_score + "\n"
 
         ### ADD Associated Domains
         if type == 'ip':
