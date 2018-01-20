@@ -75,7 +75,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 loop_count = 1
                 for iii in resp_ip_domains_json.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + " * " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " * " + "Type (" + str(iii.get("type")) + ") - " + iii.get("rr") + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no domains associated with this IP address.\n"
@@ -86,7 +86,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 loop_count = 1
                 for iii in record_resource.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + " * " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " * " + "Type (" + str(iii.get("type")) + ") - " + iii.get("rr") + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
@@ -116,7 +116,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 loop_count = 1
                 for iii in resp_ip_domains_json.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + " * " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " * " + "Type (" + str(iii.get("type")) + ") - " + iii.get("rr") + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no domains associated with this IP address.\n"
@@ -171,7 +171,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 loop_count = 1
                 for iii in record_resource.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + " * " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " * " + "Type (" + str(iii.get("type")) + ") - " + iii.get("rr") + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
