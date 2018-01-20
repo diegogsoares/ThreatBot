@@ -105,7 +105,7 @@ def index(request):
                 msg_odns = CHECK_DOMAIN_ODNS(in_message[1],"domain")
                 msg_odns_mark = '###@Cisco Umbrella \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns_mark, "markdown": msg_odns_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_odns, "markdown": msg_odns})
 
                 msg_tg = CHECK_QUERY_TG(in_message[1],"domain")
                 msg_tg_mark = '###@Cisco ThreatGrid \n'
