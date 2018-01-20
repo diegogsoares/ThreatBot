@@ -71,7 +71,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
         if type == 'ip':
             total_domains = int(resp_ip_domains_json.get("features").get("rr_count"))
             if total_domains > 0:
-                print_msg = print_msg + " There are " + str(total_domains) + " associated with this ip address, some listed below:\n"
+                print_msg = print_msg + "\n There are " + str(total_domains) + " associated with this ip address, some listed below:\n"
                 loop_count = 1
                 for iii in resp_ip_domains_json.get("rrs"):
                     if loop_count <= 5:
