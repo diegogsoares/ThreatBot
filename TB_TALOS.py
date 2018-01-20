@@ -15,7 +15,7 @@ from robobrowser import RoboBrowser
 ######################################################
 def TALOS_BLOCK_LIST(input_value,type):
 
-    input_value_ip = input_value
+    input_value_original = input_value
     if type == "domain":
         try:
             my_resolver = dns.resolver.Resolver()
@@ -56,7 +56,7 @@ def TALOS_BLOCK_LIST(input_value,type):
 
     print_msg_BC = ""
 
-    url_ip = "https://amptools.cisco.com/network.php?query="+input_value_ip
+    url_ip = "https://amptools.cisco.com/network.php?query="+input_value_original
 
     browser.open(url_ip)
 
@@ -77,6 +77,7 @@ def TALOS_BLOCK_LIST(input_value,type):
             if cleanTalosscore != '[]':
                 print_msg = print_msg + "\nTalos Category:" + str(cleanTalosscore)
                 print_msg = print_msg + "\nTalos " + statusTalos
+                print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
             else:
                 print_msg = print_msg + "\nTalos Category: Unknown"
         elif "BrightCloud" in row:

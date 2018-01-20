@@ -9,8 +9,6 @@ requests.packages.urllib3.disable_warnings()
 
 ###
 ### Next feeds:
-### Talos Intel - amptools.cisco.com
-### Bright Cloud
 ### mxtoolbox.com/SuperTool.aspx#
 ### Stealthwatch flows for domain + IPs
 ### FMC for domain + IPs
