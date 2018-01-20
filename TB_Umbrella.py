@@ -65,17 +65,17 @@ def CHECK_DOMAIN_ODNS (input_value,type):
         security_category = ""
         for i in resp_category_json[input_value]["security_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is Blocked!\n * Security score is: " + secure_score + "\n* It's IP reputation is: " + rip_score + "\n* IP popularity is: " + popularity_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Blocked!\n - Security score is: " + secure_score + "\n - It's IP reputation is: " + rip_score + "\n - IP popularity is: " + popularity_score + "\n"
 
         ### ADD Associated Domains
         if type == 'ip':
             total_domains = int(resp_ip_domains_json.get("features").get("rr_count"))
             if total_domains > 0:
-                print_msg = print_msg + "\n There are " + str(total_domains) + " associated with this ip address, some listed below:\n"
+                print_msg = print_msg + "There are " + str(total_domains) + " associated with this ip address, some listed below:\n"
                 loop_count = 1
                 for iii in resp_ip_domains_json.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + "* " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " - " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no domains associated with this IP address.\n"
@@ -86,7 +86,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 loop_count = 1
                 for iii in record_resource.get("rrs"):
                     if loop_count <= 5:
-                        print_msg = print_msg + "* " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
+                        print_msg = print_msg + " - " + iii.get("rr") + " - Type (" + str(iii.get("type")) + ")" + "\n"
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
@@ -97,7 +97,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
             loop_count = 1
             for ii in resp_samples_json["samples"]:
                 if loop_count <= 5:
-                    print_msg = print_msg + "* " + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + " - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
+                    print_msg = print_msg + " - " + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + " - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
         print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
