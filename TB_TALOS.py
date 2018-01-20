@@ -80,6 +80,7 @@ def TALOS_BLOCK_LIST(input_value,type):
                 print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
             else:
                 print_msg = print_msg + "\nTalos Category: Unknown"
+                print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
         elif "BrightCloud" in row:
             cellsBC = rows.findAll("td")
             scoreBC = cellsBC[1].findAll("p")
