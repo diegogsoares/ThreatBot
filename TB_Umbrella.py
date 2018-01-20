@@ -106,7 +106,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
         security_category = ""
         for i in resp_category_json[input_value]["content_categories"]:
             security_category +=  i + ", "
-        print_msg = " " + input_value + " is categorized as " + security_category + "and is Good!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n It's IP popularity is: " + popularity_score + "\n"
+        print_msg = " " + input_value + " is categorized as " + security_category + "and is Good!\n \tIt's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n It's IP popularity is: " + popularity_score + "\n"
 
         ### ADD Associated Domains
         if type == 'ip':
@@ -150,7 +150,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                 security_category +=  i + ", "
             print_msg = " " + input_value + " is categorized as " + security_category +"and not known to be either Good or Bad.\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n It's IP popularity is: " + popularity_score + "\n"
         else:
-            print_msg = " " + input_value + " is Unclassified!\n It's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n It's IP popularity is: " + popularity_score + "\n"
+            print_msg = " " + input_value + " is Unclassified!\n \tIt's security score is: " + secure_score + "\n It's IP reputation is: " + rip_score + "\n It's IP popularity is: " + popularity_score + "\n"
 
         ### ADD Associated Domains
         if type == 'ip':
