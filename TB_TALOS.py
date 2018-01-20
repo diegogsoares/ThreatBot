@@ -90,13 +90,13 @@ def TALOS_BLOCK_LIST(input_value,type):
                     BCcategory = line.strip()
 
             if BCcategory != '[]' and cleanBCscore != '[]':
-                print_msg_BC = print_msg_BC + "\nBrightCloud " + BCreputation + " " + str(cleanBCscore)
+                print_msg_BC = print_msg_BC + "BrightCloud " + BCreputation + " " + str(cleanBCscore)
                 print_msg_BC = print_msg_BC + "\nBrightCloud " + BCcategory
             elif BCcategory != '[]' and cleanBCscore == '[]':
-                print_msg_BC = print_msg_BC + "\nBrightCloud " + BCreputation
+                print_msg_BC = print_msg_BC + "BrightCloud " + BCreputation
                 print_msg_BC = print_msg_BC + "\nBrightCloud " + BCcategory
             else:
-                print_msg_BC = print_msg_BC + "\nBrightCloud Category: Unknown"
+                print_msg_BC = print_msg_BC + "BrightCloud Category: Unknown"
 
 
     logger.info("TALOS AMPTOOLBOX OK!")
