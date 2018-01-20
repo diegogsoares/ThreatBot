@@ -141,7 +141,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                     print_msg = print_msg + " * " + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
-        print_msg = print_msg + "\nMore information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
+        print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     else:
         security_category = ""
@@ -190,7 +190,7 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                     print_msg = print_msg + " * " + ii["sha1"] + " - Threat Score (" + str(ii["threatScore"]) + ")" + "\t - https://investigate.opendns.com/sample-view/" + ii["sha1"] + "\n"
                     loop_count += 1
 
-        print_msg = print_msg + "\nMore information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
+        print_msg = print_msg + "More information @ https://investigate.opendns.com/domain-view/name/"+input_value+'/view' + "\n"
 
     logger.info("ONDS DOMAIN OK!")
     print("ONDS DOMAIN OK!")
@@ -220,9 +220,9 @@ def CHECK_HASH_ODNS (input_value):
     odns_hash_threatscore = resp_hash_json.get("threatScore")
     odns_hash_type = resp_hash_json.get("magicType")
 
-    print_msg = " " + str(input_value) + " was classified as " + str(odns_hash_type) + " with a threat score of " + str(odns_hash_threatscore) + "!\n\t These are the connections seen by ThreatGrid:\n"
+    print_msg = " " + str(input_value) + " was classified as " + str(odns_hash_type) + " with a threat score of " + str(odns_hash_threatscore) + "!\n These are the connections seen by ThreatGrid:\n"
     for i in resp_hash_json["connections"]['connections']:
-        print_msg = print_msg + "\t\t" + i['name'] + "\n"
+        print_msg = print_msg + " * " + i['name'] + "\n"
     print_msg = print_msg + " More information @ https://investigate.umbrella.com/sample-view/" + input_value + "\n"
 
     logger.info("ONDS HASH OK!")
