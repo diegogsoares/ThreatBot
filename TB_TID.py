@@ -45,7 +45,9 @@ def GET_TID_IOCS ():
     tid_ioc_header = {"Accept": "application/json", "Content-Type": "application/json", 'X-auth-access-token': GET_TID_TOKEN ()}
     resp_tid_iocs = requests.get(tid_iocs_url, headers=tid_ioc_header, verify=False)
 
-    return resp_tid_iocs
+    tid_ioc_json = resp_tid_iocs.json()
+
+    return tid_ioc_json
 
 
 ######################################################
