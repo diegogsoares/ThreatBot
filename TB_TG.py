@@ -2,6 +2,8 @@ from TB_Logger import *
 import requests
 import sys
 
+requests.packages.urllib3.disable_warnings()
+
 ######################################################
 ##########
 ########## Variables TG APIs
@@ -20,7 +22,7 @@ tg_url = 'https://panacea.threatgrid.com/api/v2/'
 def CHECK_QUERY_TG (input_value,input):
 
     parameters_ip_tg='api_key='+credential.tg_apikey+'&q='+input_value+'&limit=50'
-    resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg)
+    resp_ip_tg = requests.get(tg_url+'search/submissions?', params=parameters_ip_tg, verify=False)
 
     if resp_ip_tg.status_code != 200:
         logger.info("TG FAIL! -  " + str(resp_ip_tg.status_code))
