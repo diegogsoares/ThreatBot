@@ -29,7 +29,7 @@ def GET_TID_TOKEN ():
 #        logger.info("TID FAIL! -  " + str(resp_tid_token.status_code))
 #        return "FMC TID Error: API Call Status " + str(resp_tid_token.status_code)
 
-    print (resp_tid_token.headers['X-auth-access-token'])
+    print (resp_tid_token.headers['x-auth-access-token'])
 
     return
 
