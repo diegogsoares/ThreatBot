@@ -26,9 +26,9 @@ def GET_TID_TOKEN ():
     tid_token_header = {'Authorization': 'Basic ' + credential.tid_auth}
     resp_tid_token = requests.get(tid_token_url, headers=tid_token_header, verify=False)
 
-    if resp_tid_token.status_code != 200:
-        logger.info("TID FAIL! -  " + str(resp_tid_token.status_code))
-        return "FMC TID Error: API Call Status " + str(resp_tid_token.status_code)
+#    if resp_tid_token.status_code != 200:
+#        logger.info("TID FAIL! -  " + str(resp_tid_token.status_code))
+#        return "FMC TID Error: API Call Status " + str(resp_tid_token.status_code)
 
     print (resp_tid_token.headers['X-auth-access-token'])
 
