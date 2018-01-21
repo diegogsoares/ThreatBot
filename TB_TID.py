@@ -2,7 +2,6 @@
 import requests
 import sys
 
-requests.packages.urllib3.disable_warnings()
 
 ######################################################
 ##########
