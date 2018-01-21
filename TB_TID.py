@@ -29,19 +29,23 @@ def GET_TID_TOKEN ():
 #        logger.info("TID FAIL! -  " + str(resp_tid_token.status_code))
 #        return "FMC TID Error: API Call Status " + str(resp_tid_token.status_code)
 
-    print (resp_tid_token.headers['X-auth-access-token'])
+    access_token = resp_tid_token.headers['X-auth-access-token']
 
-    return
+    return access_token
 
 ######################################################
 ##########
 ########## Function Activity ThreatGrid
 ##########
 ######################################################
-def ACTIVITY_QUERY_TG (input_value,input):
+def GET_TID_IOCS ():
 
+    tid_iocs_url = tid_url + "fmc_tid/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/tid/indicator"
 
-    return print_msg
+    tid_ioc_header = {"Accept": "application/json", "Content-Type": "application/json", 'X-auth-access-token': GET_TID_TOKEN ()}
+    resp_tid_iocs = requests.get(tid_iocs_url, headers=tid_ioc_header, verify=False)
+
+    return resp_tid_iocs
 
 
 ######################################################
@@ -55,7 +59,7 @@ if sys.argv[1] == '-ip':
     msg_to_print = CHECK_QUERY_TG(sys.argv[2],"ip")
     print (msg_to_print)
 elif sys.argv[1] == '-token':
-    msg_to_print = GET_TID_TOKEN()
+    msg_to_print = GET_TID_IOCS()
     print (msg_to_print)
 elif sys.argv[1] == '-hash':
     msg_to_print = CHECK_QUERY_TG(sys.argv[2],"hash")
