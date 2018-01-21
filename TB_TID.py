@@ -23,7 +23,7 @@ def GET_TID_TOKEN ():
     tid_token_url = tid_url + "fmc_platform/v1/auth/generatetoken"
 
     tid_token_header = {'Authorization': 'Basic ' + credential.tid_auth}
-    resp_tid_token = requests.get(tid_token_url, headers=tid_token_header, verify=False)
+    resp_tid_token = requests.post(tid_token_url, headers=tid_token_header, verify=False)
 
 #    if resp_tid_token.status_code != 200:
 #        logger.info("TID FAIL! -  " + str(resp_tid_token.status_code))
