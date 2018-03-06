@@ -1,5 +1,6 @@
 import requests
 import sys
+import time
 from TB_Logger import *
 
 ######################################################
@@ -17,6 +18,7 @@ odns_samples_url = 'samples/'
 odns_sample_info_url = 'sample/'
 odns_ip_domains = 'dnsdb/ip/a/'
 odns_name_domains = 'dnsdb/name/a/'
+odns_timeline = 'timeline/'
 
 ######################################################
 ##########
@@ -30,6 +32,8 @@ def CHECK_DOMAIN_ODNS (input_value,type):
     resp_samples = requests.get(odns_uri + odns_samples_url + input_value, headers=investigate_header)
     resp_ip_domains = requests.get(odns_uri + odns_ip_domains + input_value + ".json", headers=investigate_header)
     resp_name_domains = requests.get(odns_uri + odns_name_domains + input_value + ".json", headers=investigate_header)
+    resp_timeline = requests.get(odns_uri + odns_timeline + input_value, headers=investigate_header)
+
 
     if resp_category.status_code != 200:
         logger.info("Category ONDS FAIL! -  " + str(resp_category.status_code))
@@ -51,11 +55,17 @@ def CHECK_DOMAIN_ODNS (input_value,type):
         logger.info("Domains for name ONDS FAIL! -  " + str(resp_name_domains.status_code))
         return "Umbrella Error: API Call Status " + str(resp_name_domains.status_code)
 
+    if resp_timeline.status_code != 200:
+        logger.info("Timeline for ONDS FAIL! -  " + str(resp_timeline.status_code))
+        return "Umbrella Error: API Call Status " + str(resp_timeline.status_code)
+
+
     resp_category_json=resp_category.json()
     resp_secscore_json=resp_secscore.json()
     resp_samples_json=resp_samples.json()
     resp_ip_domains_json = resp_ip_domains.json()
     resp_name_domains_json = resp_name_domains.json()
+    resp_timeline_json = resp_timeline.json()
 
     secure_score = str(resp_secscore_json.get("securerank2"))
     rip_score = str(resp_secscore_json.get("rip_score"))
@@ -91,6 +101,19 @@ def CHECK_DOMAIN_ODNS (input_value,type):
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
         ###
+
+        ### - ADD Timeline
+
+        print_msg = print_msg + " Time lines for this domain are:\n"
+
+        for i in resp_timeline_json:
+            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+            if not i.get("categories"):
+                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+            else:
+                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+
+            ###
 
         if resp_samples_json["totalResults"] > 0:
             print_msg = print_msg + " It has " + str(resp_samples_json["totalResults"]) + " malware samples, some listed below:" + "\n"
@@ -131,6 +154,19 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
+        ###
+
+        ### - ADD Timeline
+
+        print_msg = print_msg + " Time lines for this domain are:\n"
+
+        for i in resp_timeline_json:
+            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+            if not i.get("categories"):
+                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+            else:
+                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+
         ###
 
         if resp_samples_json["totalResults"] > 0:
@@ -175,6 +211,19 @@ def CHECK_DOMAIN_ODNS (input_value,type):
                         loop_count += 1
             else:
                 print_msg = print_msg + " There is no Resource record for this domain.\n"
+        ###
+
+        ### - ADD Timeline
+
+        print_msg = print_msg + " Time lines for this domain are:\n"
+
+        for i in resp_timeline_json:
+            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+            if not i.get("categories"):
+                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+            else:
+                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+
         ###
 
         if resp_samples_json.get("totalResults"):
@@ -237,7 +286,7 @@ def CHECK_HASH_ODNS (input_value):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-''''
+#''''
 
 if sys.argv[1] == '-ip':
     msg_to_print = CHECK_DOMAIN_ODNS(sys.argv[2],"ip")
