@@ -286,7 +286,7 @@ def CHECK_HASH_ODNS (input_value):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-#''''
+''''
 
 if sys.argv[1] == '-ip':
     msg_to_print = CHECK_DOMAIN_ODNS(sys.argv[2],"ip")
