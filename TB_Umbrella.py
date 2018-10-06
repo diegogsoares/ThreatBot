@@ -104,14 +104,18 @@ def CHECK_DOMAIN_ODNS (input_value,type):
 
         ### - ADD Timeline
 
-        print_msg = print_msg + " Time lines for this domain are:\n"
+        print_msg = print_msg + "TIME LINE: Last 20 events for this domain are:\n"
+
+        count = 0
 
         for i in resp_timeline_json:
-            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
-            if not i.get("categories"):
-                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
-            else:
-                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+            if count <= 20:
+                count += 1
+                time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+                if not i.get("categories"):
+                    print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+                else:
+                    print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
 
             ###
 
@@ -158,14 +162,18 @@ def CHECK_DOMAIN_ODNS (input_value,type):
 
         ### - ADD Timeline
 
-        print_msg = print_msg + " Time lines for this domain are:\n"
+        print_msg = print_msg + "TIME LINE: Last 20 events for this domain are:\n"
+
+        count = 0
 
         for i in resp_timeline_json:
-            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
-            if not i.get("categories"):
-                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
-            else:
-                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+            if count <= 20:
+                count += 1
+                time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+                if not i.get("categories"):
+                    print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+                else:
+                    print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
 
         ###
 
@@ -215,14 +223,19 @@ def CHECK_DOMAIN_ODNS (input_value,type):
 
         ### - ADD Timeline
 
-        print_msg = print_msg + " Time lines for this domain are:\n"
+        print_msg = print_msg + "TIME LINE: Last 20 events for this domain are:\n"
+
+        count = 0
 
         for i in resp_timeline_json:
-            time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
-            if not i.get("categories"):
-                print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
-            else:
-                print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+            if count <= 20:
+                count += 1
+                time_event = time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(i.get("timestamp")/1000))
+                if not i.get("categories"):
+                    print_msg = print_msg + " * " + time_event + " - Categories Cleared.\n"
+                else:
+                    print_msg = print_msg + " * " + time_event + " - Category set as " + str(i.get("categories")) + "\n"
+
 
         ###
 
