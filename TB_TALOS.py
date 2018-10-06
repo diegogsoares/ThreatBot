@@ -17,39 +17,8 @@ def TALOS_BLOCK_LIST(input_value,type):
 
     BCcategory = '[]'
     cleanBCscore = '[]'
-
     input_value_original = input_value
-    if type == "domain":
-        try:
-            my_resolver = dns.resolver.Resolver()
-            my_resolver.nameservers = ['8.8.8.8']
-            my_resolver.timeout = 3
-            answers = my_resolver.query(input_value, "A")
-            input_value = str(answers[0])
-        except:
-            logger.info("DNS Query Failed!")
-            print("DNS Query Failed!")
-
-    talos_bl = False
-    datalist = open("ip-filter.blf", "r")
-    iplist = datalist.readline()
-    talos_count = 0
-
-    while iplist:
-        if iplist.strip() == input_value:
-            talos_bl = True
-        iplist = datalist.readline()
-        talos_count += 1
-
-    if talos_bl == True:
-        print_msg = "Talos Block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
-    else:
-        print_msg = "Talos Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
-
-    datalist.close()
-
-    logger.info("TALOS BL OK!")
-    print("TALOS BL OK!")
+    print_msg = ""
 
     ############
 
@@ -78,8 +47,9 @@ def TALOS_BLOCK_LIST(input_value,type):
                 if "Status:" in line:
                     statusTalos = line.strip()
             if cleanTalosscore != '[]':
-                print_msg = print_msg + "\nTalos Category:" + str(cleanTalosscore)
-                print_msg = print_msg + "\nTalos " + statusTalos
+                print_msg = print_msg + "\nTalos Category for "+str(input_value_original)+":" + str(cleanTalosscore)
+                status_list = statusTalos.split(":")
+                print_msg = print_msg + "\nTalos Status  for "+str(input_value_original)+":" + status_list[1]
                 print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
             else:
                 print_msg = print_msg + "\nTalos Category: Unknown"
@@ -106,6 +76,43 @@ def TALOS_BLOCK_LIST(input_value,type):
 
     logger.info("TALOS AMPTOOLBOX OK!")
     print("TALOS AMPTOOLBOX OK!")
+
+    ##############################
+
+    if type == "domain":
+        try:
+            my_resolver = dns.resolver.Resolver()
+            my_resolver.nameservers = ['8.8.8.8']
+            my_resolver.timeout = 3
+            answers = my_resolver.query(input_value, "A")
+            input_value = str(answers[0])
+        except:
+            logger.info("DNS Query Failed!")
+            print("DNS Query Failed!")
+
+    talos_bl = False
+    datalist = open("ip-filter.blf", "r")
+    iplist = datalist.readline()
+    talos_count = 0
+
+    while iplist:
+        if iplist.strip() == input_value:
+            talos_bl = True
+        iplist = datalist.readline()
+        talos_count += 1
+
+    if talos_bl == True:
+        print_msg = print_msg + "Talos IP Block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
+    else:
+        print_msg = print_msg + "Talos IP Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
+
+    datalist.close()
+
+    logger.info("TALOS BL OK!")
+    print("TALOS BL OK!")
+
+
+    ##############################
 
     if type == "ip":
         return (print_msg, "ip")
