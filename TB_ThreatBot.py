@@ -130,6 +130,11 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
+                msg_visibility_mark = '###@AMP Visibility \n'
+                msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
+
             elif (validators.ipv4(in_message[1]) and validuser == True):
                 logger.info("IP!!")
 
@@ -158,6 +163,11 @@ def index(request):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl_mark, "markdown": msg_bl_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_bl})
 
+                msg_visibility_mark = '###@AMP Visibility \n'
+                msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
+
             elif (len(in_message[1]) == 40 and validuser == True):
                 logger.info("SHA1 Hash!!")
 
@@ -178,6 +188,11 @@ def index(request):
                 msg_vt_mark = '###@Virus Total \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+
+                msg_visibility_mark = '###@AMP Visibility \n'
+                msg_visibility = 'CISCO AMP does not support weak SHA1 Hash'
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
             elif (len(in_message[1]) == 64 and validuser == True):
                 logger.info("SHA256 Hash!!")
@@ -201,6 +216,11 @@ def index(request):
                 msg_vt_mark = '###@Virus Total \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt_mark, "markdown": msg_vt_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_vt})
+
+                msg_visibility_mark = '###@AMP Visibility \n'
+                msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
             elif validuser == True:
                 msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
