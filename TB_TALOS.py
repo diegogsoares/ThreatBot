@@ -47,7 +47,7 @@ def TALOS_BLOCK_LIST(input_value,type):
                 if "Status:" in line:
                     statusTalos = line.strip()
             if cleanTalosscore != '[]':
-                print_msg = print_msg + "Talos Category for "+str(input_value_original)+":" + str(cleanTalosscore)
+                print_msg = print_msg + "Talos Category for "+str(input_value_original)+": " + str(cleanTalosscore)
                 status_list = statusTalos.split(":")
                 print_msg = print_msg + "\nTalos BLOCK Status for "+str(input_value_original)+":" + status_list[1]
             else:
