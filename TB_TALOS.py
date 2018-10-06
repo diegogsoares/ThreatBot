@@ -47,13 +47,11 @@ def TALOS_BLOCK_LIST(input_value,type):
                 if "Status:" in line:
                     statusTalos = line.strip()
             if cleanTalosscore != '[]':
-                print_msg = print_msg + "\nTalos Category for "+str(input_value_original)+":" + str(cleanTalosscore)
+                print_msg = print_msg + "Talos Category for "+str(input_value_original)+":" + str(cleanTalosscore)
                 status_list = statusTalos.split(":")
-                print_msg = print_msg + "\nTalos Status  for "+str(input_value_original)+":" + status_list[1]
-                print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
+                print_msg = print_msg + "\nTalos BLOCK Status for "+str(input_value_original)+":" + status_list[1]
             else:
-                print_msg = print_msg + "\nTalos Category: Unknown"
-                print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
+                print_msg = print_msg + "Talos Category: Unknown"
         elif "BrightCloud" in row:
             cellsBC = rows.findAll("td")
             scoreBC = cellsBC[1].findAll("p")
@@ -102,9 +100,11 @@ def TALOS_BLOCK_LIST(input_value,type):
         talos_count += 1
 
     if talos_bl == True:
-        print_msg = print_msg + "Talos IP Block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
+        print_msg = print_msg + "\nTalos IP Block list has %s entries and IP: %s WAS found!" % (talos_count,input_value)
+        print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
     else:
-        print_msg = print_msg + "Talos IP Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
+        print_msg = print_msg + "\nTalos IP Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_value)
+        print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
 
     datalist.close()
 
