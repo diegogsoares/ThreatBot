@@ -15,6 +15,9 @@ from robobrowser import RoboBrowser
 ######################################################
 def TALOS_BLOCK_LIST(input_value,type):
 
+    BCcategory = '[]'
+    cleanBCscore = '[]'
+
     input_value_original = input_value
     if type == "domain":
         try:
