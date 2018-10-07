@@ -210,7 +210,7 @@ def ACTIVITY_QUERY_TG (input_value,input):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-#'''
+'''
 
 if sys.argv[1] == '-ip':
     msg_to_print = CHECK_INTEL_TG(sys.argv[2],"ip")
