@@ -101,9 +101,12 @@ def TALOS_BLOCK_LIST(input_value,type):
             resp_http_dns_json = resp_http_dns.json()
             resp_ip = resp_http_dns_json.get("Answer")
 
-            for i in resp_ip:
-                if validators.ipv4(i.get("data")):
-                    input_ip = i.get("data")
+            if resp_ip:
+                for i in resp_ip:
+                    if validators.ipv4(i.get("data")):
+                        input_ip = i.get("data")
+            else:
+                input_ip = "0.0.0.0"
 
 
     talos_bl = False
@@ -121,7 +124,10 @@ def TALOS_BLOCK_LIST(input_value,type):
         print_msg = print_msg + "\nTalos IP Block list has %s entries and IP: %s WAS found!" % (talos_count,input_ip)
         print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
     else:
-        print_msg = print_msg + "\nTalos IP Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_ip)
+        if input_ip != "0.0.0.0":
+            print_msg = print_msg + "\nTalos IP Block list has %s entries and IP: %s was NOT found!" % (talos_count,input_ip)
+        else:
+            print_msg = print_msg + "\nIP for this domain could not be resolved."
         print_msg = print_msg + "\nMore information @ https://www.talosintelligence.com/reputation_center/lookup?search=" + input_value_original
 
     datalist.close()
