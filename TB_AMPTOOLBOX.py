@@ -33,10 +33,12 @@ def CHECK_AMPTOOLBOX (input_value):
     toolbox_talos_score = resp_toolbox_json.get("talos_score")
     toolbox_disposition = resp_toolbox_json.get("disposition")
 
-    print_msg = "Talos threat score for this file is: " + str(toolbox_talos_score) + "\nFile disposition is " + str(toolbox_disposition)
+    print_msg = "File disposition is " + str(toolbox_disposition)
 
     if resp_toolbox_json.get("threat_name") != None:
         print_msg = print_msg + " and threat name is " + str(resp_toolbox_json.get("threat_name"))
+
+    print_msg = print_msg + "\nTalos threat score for this file is: " + str(toolbox_talos_score)
 
     threat_date = CHECK_AMPTOOLBOX_PAGE(input_value)
 
