@@ -80,6 +80,7 @@ def TALOS_BLOCK_LIST(input_value,type):
     ##############################
 
     if type == "domain":
+        answers_cname = "sinkhole.esl.cisco.com."
         try:
             my_resolver = dns.resolver.Resolver()
 #            my_resolver.nameservers = ['8.8.8.8']
