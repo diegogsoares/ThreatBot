@@ -34,25 +34,16 @@ from TB_VT import *
 ##########
 ######################################################
 def sendSparkGET(url):
-    """
-    This method is used for:
-        - Retrieving message text, when the webhook is triggered with a message
-        - Getting the username of the person who posted the message if a command is recognized
-    
-    request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
-    contents = urllib2.urlopen(request).read()
-    """
-    logger.info("GET Message")
+    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer '+credential.spark_bearer+'"}'
 
-    request = requests.get(url,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
+    request = requests.get(url,headers=header, verify=False)
     request_json = request.json()
     
     print(json.dumps(request_json, indent=4, sort_keys=True))
 
     return (request_json)
 
-def sendSparkPOST(url, data):
+def sendSparkPOST(url, payload):
     """
     This method is used for:
         - Posting a message to the Spark room to confirm that a command was received and processed
@@ -65,7 +56,7 @@ def sendSparkPOST(url, data):
     print (url)
     print (data)
     print (header)
-    request = requests.post(url,data=data, headers=header, verify=False)
+    request = requests.post(url, data=payload, headers=header, verify=False)
     request_json = request.json()
 
     print (request.status_code)
