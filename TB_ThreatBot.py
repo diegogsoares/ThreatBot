@@ -95,13 +95,12 @@ def index(webhook):
         in_message = result.get('text', '').lower()
         in_message = in_message.replace(credential.bot_name, '')
 
-        print(in_message)
-
         logger.info(webhook['data']['personEmail'])
         logger.info(in_message)
 
         in_message = in_message.split(' ')
-
+        print(in_message[0])
+        print(validuser)
         if (in_message[0] == '/intel' and validuser == True):
 
             if (validators.domain(in_message[1]) and validuser == True):
