@@ -44,17 +44,9 @@ def sendSparkGET(url):
     return (request_json)
 
 def sendSparkPOST(url, payload):
-    """
-    This method is used for:
-        - Posting a message to the Spark room to confirm that a command was received and processed
-    
-    request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
-    request.add_header("Authorization", "Bearer " + credential.spark_bearer)
-    contents = urllib2.urlopen(request).read()
-    """
     header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer '+credential.spark_bearer+'"}'
     print (url)
-    print (data)
+    print (payload)
     print (header)
     request = requests.post(url, data=payload, headers=header, verify=False)
     request_json = request.json()
@@ -71,7 +63,7 @@ def sendSparkPOST(url, payload):
 ######################################################
 def index(webhook):
 
-    result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
+    result = sendSparkGET('https://api.ciscospark.com/v1/messages/'+str(webhook['data']['id']))
 
     print (result)
 
