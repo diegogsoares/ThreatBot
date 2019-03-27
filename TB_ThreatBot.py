@@ -1,9 +1,7 @@
 import json
 import requests
 import validators
-from itty import *
-import urllib2
-
+import  bottle
 
 requests.packages.urllib3.disable_warnings()
 
@@ -38,25 +36,31 @@ from TB_VT import *
 def sendSparkGET(url):
     """
     This method is used for:
-        -retrieving message text, when the webhook is triggered with a message
-            -Getting the username of the person who posted the message if a command is recognized
-    """
+        - Retrieving message text, when the webhook is triggered with a message
+        - Getting the username of the person who posted the message if a command is recognized
+    
     request = urllib2.Request(url, headers={"Accept": "application/json", "Content-Type": "application/json"})
     request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
-
-    return contents
+    """
+    request = requests.get(url,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
+    request_json = request.json()
+    
+    return (request_json)
 
 def sendSparkPOST(url, data):
     """
-        This method is used for:
-            -posting a message to the Spark room to confirm that a command was received and processed
-    """
+    This method is used for:
+        - Posting a message to the Spark room to confirm that a command was received and processed
+    
     request = urllib2.Request(url, json.dumps(data), headers={"Accept": "application/json", "Content-Type": "application/json"})
     request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
+    """
+    request = requests.post(url,data=data, headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
+    request_json = request.json()
 
-    return contents
+    return (request_json)
 
 
 ######################################################
@@ -65,7 +69,7 @@ def sendSparkPOST(url, data):
 ##########
 ######################################################
 
-@post('/')
+@route('/')
 def index(request):
     """
         When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
@@ -75,7 +79,6 @@ def index(request):
     webhook = json.loads(request.body)
     print(webhook['data']['id'])
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
-    result = json.loads(result)
 
     msg = None
     validuser = False
@@ -250,4 +253,4 @@ def index(request):
 
     return "true"
 
-run_itty(server='wsgiref', host='0.0.0.0', port=10010)
+run(host='0.0.0.0', port=10010)

@@ -63,7 +63,7 @@ def CHECK_INTEL_TG (input_value,input):
             print_msg = print_msg + "This IP has been flagged " + str(bad_flag_count) + " times as a BAD IP with the following tags" +str(bad_flags)+ "\n"
 
         ### FUTURE FEATURE - ADD QUERY for related domains
-        # https://panacea.threatgrid.com/api/v2/search/domains?api_key=XXXXXXXXXXXX&term=ip&query=[ip]
+        # https://panacea.threatgrid.com/api/v2/search/domains?api_key=XXXXXXXXXXXX&after=YYYY-MM-DD&term=ip&query=[ip]
 
     elif input == "domain":
         tg_domain_url = "https://panacea.threatgrid.com/api/v2/domains/"+input_value+'?'
@@ -90,7 +90,8 @@ def CHECK_INTEL_TG (input_value,input):
             print_msg = print_msg + "This Domain has been flagged " + str(bad_flag_count) + " times as a BAD domain with the following tags" +str(bad_flags)+ "\n"
 
         ### FUTURE FEATURE - ADD QUERY for related IPs
-        #https://panacea.threatgrid.com/api/v2/search/ips?api_key=XXXXXXXXXXXX&term=domain&query=[domain]
+        #https://panacea.threatgrid.com/api/v2/search/ips?api_key=XXXXXXXXXXXX&after=YYYY-MM-DD&term=domain&query=[domain]
+
 
     elif input =='hash':
         tg_hash_url = "https://panacea.threatgrid.com/api/v2/artifacts/"+input_value+'?'
@@ -120,9 +121,10 @@ def CHECK_INTEL_TG (input_value,input):
         print_msg = print_msg + "This HASH has been identified as " + str(hash_type) + "\n"
 
         ### FUTURE FEATURE - ADD QUERY for related IPs
-        #https://panacea.threatgrid.com/api/v2/search/ips?api_key=XXXXXXXXXXXX&term=artifact&query=[hash]
+        #https://panacea.threatgrid.com/api/v2/search/ips?api_key=XXXXXXXXXXXX&after=YYYY-MM-DD&term=artifact&query=[hash]
         ### FUTURE FEATURE - ADD QUERY for related domains
-        # https://panacea.threatgrid.com/api/v2/search/domains?api_key=XXXXXXXXXXXX&term=sha256&query=[hash]
+        # https://panacea.threatgrid.com/api/v2/search/domains?api_key=XXXXXXXXXXXX&after=YYYY-MM-DD&term=sha256&query=[hash]
+
 
 
     ################
