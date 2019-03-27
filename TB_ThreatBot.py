@@ -1,7 +1,7 @@
 import json
 import requests
 import validators
-import  bottle
+from bottle import route, run, template
 
 requests.packages.urllib3.disable_warnings()
 
