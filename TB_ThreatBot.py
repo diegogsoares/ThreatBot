@@ -242,21 +242,23 @@ def index(webhook):
     return "true"
 
 class S(BaseHTTPRequestHandler):
-    def _set_headers(self):
+    def _set_response(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
     def do_GET(self):
-        self._set_headers()
-        
-    def do_HEAD(self):
-        self._set_headers()
+        self._set_response()
+        self.wfile.write("GET request for {}".format(self.path).encode('utf-8'))
+
+ 	    # POST valida se o que chega sem dados via o Webhook
+   	    # do POST e' que se chama a rotina de respnder ao usuario
 
     def do_POST(self):
-        self._set_headers()
-        self.data_string = self.rfile.read(int(self.headers['Content-Length']))
-        self.end_headers()
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+        post_data = self.rfile.read(content_length) # <--- Gets the data itself
+        self._set_response()
+        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
 
         content = json.loads(self.data_string.decode('utf-8'))
 
