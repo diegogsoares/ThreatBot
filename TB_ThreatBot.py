@@ -70,12 +70,10 @@ def sendSparkPOST(url, payload):
 ##########
 ######################################################
 def index(webhook):
-    """
-        When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
-        using the sendSparkGet() function.  The message text is parsed.  If an expected command is found in the message,
-        further actions are taken. i.e.
-    """
+
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
+
+    print (result)
 
     msg = None
     validuser = False
