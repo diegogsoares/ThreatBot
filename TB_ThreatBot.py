@@ -61,7 +61,7 @@ def sendSparkPOST(url, data):
     request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
     """
-    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "'+credential.spark_bearer+'}'
+    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer '+credential.spark_bearer+'"}'
     print (url)
     print (data)
     print (header)
