@@ -68,6 +68,8 @@ def sendSparkPOST(url, data):
     request = requests.post(url,data=data, headers=header, verify=False)
     request_json = request.json()
 
+    print (request.status_code)
+
     return (request_json)
 
 
