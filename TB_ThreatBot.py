@@ -281,7 +281,7 @@ class S(BaseHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=S, port=10010):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    print 'Starting Threatbot WEB Listener...'
+    print ('Starting Threatbot WEB Listener...')
     httpd.serve_forever()
 
 run()
