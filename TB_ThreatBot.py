@@ -43,7 +43,6 @@ def sendSparkGET(url):
     request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
     """
-    print("GET Message")
     logger.info("GET Message")
 
     request = requests.get(url,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
@@ -95,6 +94,8 @@ def index(webhook):
 
         in_message = result.get('text', '').lower()
         in_message = in_message.replace(credential.bot_name, '')
+
+        print(in_message)
 
         logger.info(webhook['data']['personEmail'])
         logger.info(in_message)
