@@ -261,19 +261,21 @@ class S(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        self._set_headers()
-        self.wfile.write("<html><body><h1>ThreatBot Listener!</h1></body></html>")
+        self._set_response()
+        self.wfile.write("GET request for {}".format(self.path).encode('utf-8'))
 
     def do_HEAD(self):
         self._set_headers()
-        
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        self._set_response()
-        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
 
-        content=json.loads(post_data.decode('utf-8'))
+    def do_POST(self):
+        self._set_headers()
+        self.data_string = self.rfile.read(int(self.headers['Content-Length']))
+
+        self.send_response(200)
+        self.end_headers()
+
+        content = simplejson.loads(self.data_string.decode('utf-8'))
+
         execution_response = index(content)
         print (execution_response)
 
