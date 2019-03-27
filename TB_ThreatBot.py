@@ -61,7 +61,11 @@ def sendSparkPOST(url, data):
     request.add_header("Authorization", "Bearer " + credential.spark_bearer)
     contents = urllib2.urlopen(request).read()
     """
-    request = requests.post(url,data=data, headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
+    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "'+credential.spark_bearer+'}'
+    print (url)
+    print (data)
+    print (header)
+    request = requests.post(url,data=data, headers=header, verify=False)
     request_json = request.json()
 
     return (request_json)
@@ -240,14 +244,12 @@ def index(webhook):
             sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
 
         elif validuser == True:
-            print ("Invalid Input!")
             msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
                        "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
                        "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes:** /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370    _(*prefer SHA-256)_\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
                           {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
         else:
-            print ("Invalid User!")
             msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
                           {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
