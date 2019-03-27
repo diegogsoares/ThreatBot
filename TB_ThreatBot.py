@@ -44,6 +44,7 @@ def sendSparkGET(url):
     contents = urllib2.urlopen(request).read()
     """
     print("GET Message")
+    logger.info("GET Message")
 
     request = requests.get(url,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer "+credential.spark_bearer}, verify=False)
     request_json = request.json()
@@ -78,6 +79,8 @@ def index(request):
         using the sendSparkGet() function.  The message text is parsed.  If an expected command is found in the message,
         further actions are taken. i.e.
     """
+    print("BEGIN")
+    logger.info("BEGIN")
     webhook = json.loads(request.body)
     print(webhook['data']['id'])
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
