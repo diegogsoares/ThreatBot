@@ -255,12 +255,10 @@ class S(BaseHTTPRequestHandler):
    	    # do POST e' que se chama a rotina de respnder ao usuario
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
+        post_data = self.rfile.read(int(self.headers.getheader('Content-Length'))) # <--- Gets the data itself
         self._set_response()
-        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
 
-        content = json.loads(self.data_string.decode('utf-8'))
+        content = json.loads(post_data.decode('utf-8'))
 
         execution_response = index(content)
         print (execution_response)
