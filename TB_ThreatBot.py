@@ -1,7 +1,7 @@
 import json
 import requests
 import validators
-from bottle import route, run, template
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 requests.packages.urllib3.disable_warnings()
 
@@ -71,17 +71,13 @@ def sendSparkPOST(url, data):
 ##########  MENU - Message parsing
 ##########
 ######################################################
-@route('/')
-def index():
+def index(webhook):
     """
         When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
         using the sendSparkGet() function.  The message text is parsed.  If an expected command is found in the message,
         further actions are taken. i.e.
     """
-    print(request)
     print("BEGIN")
-    logger.info("BEGIN")
-    webhook = json.loads(request.body)
     print(webhook['data']['id'])
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
 
@@ -258,4 +254,34 @@ def index():
 
     return "true"
 
-run(host='0.0.0.0', port=10010)
+class S(BaseHTTPRequestHandler):
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+    def do_GET(self):
+        self._set_headers()
+        self.wfile.write("<html><body><h1>ThreatBot Listener!</h1></body></html>")
+
+    def do_HEAD(self):
+        self._set_headers()
+        
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+        post_data = self.rfile.read(content_length) # <--- Gets the data itself
+        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n", str(self.path), str(self.headers), post_data.decode('utf-8'))
+        self._set_response()
+        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
+
+        content=json.loads(post_data.decode('utf-8'))
+        execution_response = index(content)
+        print (execution_response)
+
+def run(server_class=HTTPServer, handler_class=S, port=10010):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print 'Starting Threatbot WEB Listener...'
+    httpd.serve_forever()
+
+run()
