@@ -274,7 +274,7 @@ class S(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
-        content = simplejson.loads(self.data_string.decode('utf-8'))
+        content = json.loads(self.data_string.decode('utf-8'))
 
         execution_response = index(content)
         print (execution_response)
