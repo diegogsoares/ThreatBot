@@ -71,8 +71,8 @@ def sendSparkPOST(url, data):
 ##########  MENU - Message parsing
 ##########
 ######################################################
-@route('/', method='POST')
-def index(request):
+@route('/')
+def index():
     """
         When messages come in from the webhook, they are processed here.  The message text needs to be retrieved from Spark,
         using the sendSparkGet() function.  The message text is parsed.  If an expected command is found in the message,
