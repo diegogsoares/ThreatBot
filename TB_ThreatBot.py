@@ -260,6 +260,8 @@ class S(BaseHTTPRequestHandler):
 
         content = json.loads(post_data.decode('utf-8'))
 
+        print(content)
+
         execution_response = index(content)
         print (execution_response)
 
