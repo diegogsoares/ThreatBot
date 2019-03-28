@@ -43,8 +43,7 @@ def sendSparkGET(url):
 
 def sendSparkPOST(url, payload):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
-    print (url)
-    print (payload)
+        print (payload)
     print (header)
     request = requests.post(url, data=payload, headers=header, verify=False)
     request_json = request.json()
@@ -228,7 +227,7 @@ def index(webhook):
                        "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
                        "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes:** /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370    _(*prefer SHA-256)_\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+                          {"roomId": str(webhook['data']['roomId']), "text": msg_mark, "markdown": msg_mark})
         else:
             msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
@@ -236,7 +235,7 @@ def index(webhook):
 
     datalist.close()
 
-    return "true"
+    return "Executed."
 
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
@@ -256,9 +255,7 @@ class S(BaseHTTPRequestHandler):
         self._set_response()
 
         content = json.loads(post_data.decode('utf-8'))
-
-        execution_response = index(content)
-        print (execution_response)
+        print(index(content))
 
 def run(server_class=HTTPServer, handler_class=S, port=10010):
     server_address = ('', port)
