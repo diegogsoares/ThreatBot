@@ -34,7 +34,7 @@ from TB_VT import *
 ##########
 ######################################################
 def sendSparkGET(url):
-    header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorizatio': 'Bearer '+credential.spark_bearer}
+    header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
     print(header)
 
     request = requests.get(url,headers=header, verify=False)
@@ -47,7 +47,7 @@ def sendSparkGET(url):
     return (request_json)
 
 def sendSparkPOST(url, payload):
-    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer '+credential.spark_bearer+'"}'
+    header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
     print (url)
     print (payload)
     print (header)
@@ -67,7 +67,6 @@ def sendSparkPOST(url, payload):
 def index(webhook):
 
     msg_url = 'https://api.ciscospark.com/v1/messages/'+str(webhook['data']['id'])
-    print (msg_url)
     result = sendSparkGET(msg_url)
     print (result)
 
@@ -263,8 +262,6 @@ class S(BaseHTTPRequestHandler):
         self._set_response()
 
         content = json.loads(post_data.decode('utf-8'))
-
-        print(content)
 
         execution_response = index(content)
         print (execution_response)
