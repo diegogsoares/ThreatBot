@@ -34,7 +34,7 @@ from TB_VT import *
 ##########
 ######################################################
 def sendSparkGET(url):
-    header = '{"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer '+credential.spark_bearer+'"}'
+    header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorizatio': 'Bearer '+credential.spark_bearer}
     print(header)
 
     request = requests.get(url,headers=header, verify=False)
