@@ -14,6 +14,7 @@ requests.packages.urllib3.disable_warnings()
 import credential
 
 toolbox_url = 'https://amptools.cisco.com/api.php?api_key='+credential.toolbox_api_key+'&talos=1&amp=1&hash='
+print (toolbox_url)
 
 ######################################################
 ##########
