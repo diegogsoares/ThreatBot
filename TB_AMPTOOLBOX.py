@@ -14,6 +14,7 @@ requests.packages.urllib3.disable_warnings()
 import credential
 
 toolbox_url = 'https://amptools.cisco.com/api.php?api_key='+credential.toolbox_api_key+'&talos=1&amp=1&hash='
+threat_date = ''
 
 ######################################################
 ##########
@@ -40,7 +41,7 @@ def CHECK_AMPTOOLBOX (input_value):
 
     print_msg = print_msg + "\nTalos threat score for this file is: " + str(toolbox_talos_score)
 
-    threat_date = CHECK_AMPTOOLBOX_PAGE(input_value)
+    #threat_date = CHECK_AMPTOOLBOX_PAGE(input_value)
 
     if threat_date != "Unknown":
         print_msg = print_msg + "\nThis hash was assigned as Malicious on:" + str(threat_date)
