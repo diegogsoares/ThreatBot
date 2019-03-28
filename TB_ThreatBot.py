@@ -81,8 +81,6 @@ def index(webhook):
         logger.info(in_message)
 
         in_message = in_message.split(' ')
-        print(in_message[0])
-        print(validuser)
         if (in_message[0] == '/intel' and validuser == True):
 
             if (validators.domain(in_message[1]) and validuser == True):
