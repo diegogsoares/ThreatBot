@@ -43,13 +43,11 @@ def sendSparkGET(url):
 
 def sendSparkPOST(url, payload):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
-    print (url)
-    print (header)
-    print (payload)
     request = requests.post(url, data=payload, headers=header, verify=False)
     request_json = request.json()
 
     print (request.status_code)
+    print (request.json())
 
     return (request_json)
 
