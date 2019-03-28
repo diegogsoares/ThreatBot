@@ -35,7 +35,6 @@ from TB_VT import *
 ######################################################
 def sendSparkGET(url):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
-
     request = requests.get(url,headers=header, verify=False)
     request_json = request.json()
     
@@ -43,12 +42,8 @@ def sendSparkGET(url):
 
 def sendSparkPOST(url, payload):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
-    print(payload)
     request = requests.post(url, json=payload, headers=header, verify=False)
     request_json = request.json()
-
-    print (request.status_code)
-    print (request.json())
 
     return (request_json)
 
@@ -212,10 +207,7 @@ def index(webhook):
                 msg_mark = "###Invalid input!! \n Select command:\n- /intel [IP Address | Domains | Hashes]\n- /activity [Usernames | IP Address | Domains | Hashes]\n\n This tool was created with the intent to search Cisco Threat Intel, free market sources and security related activity on a Cisco Infrastructure. " \
                            "The current capabilities are searching IPs, Domains or File Hashes against Cisco Security Infrastructure.\n\n **Usage Examples:**" \
                            "\n- **IP:** /activity 1.1.1.1\n- **Domain:** /intel cisco.com\n- **File Hashes:** /intel 3372c1edab46837f1e973164fa2d726c5c5e17bcb888828ccd7c4dfcc234a370    _(*prefer SHA-256)_\n"
-                payload['text'] = msg_mark
-                payload['markdown'] = msg_mark
-                payload['roomId'] = webhook['data']['roomId']
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", payload)
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
             else:
                 msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
