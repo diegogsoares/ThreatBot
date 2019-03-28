@@ -14,7 +14,6 @@ requests.packages.urllib3.disable_warnings()
 import credential
 
 toolbox_url = 'https://amptools.cisco.com/api.php?api_key='+credential.toolbox_api_key+'&talos=1&amp=1&hash='
-print (toolbox_url)
 
 ######################################################
 ##########
@@ -75,6 +74,9 @@ def CHECK_AMPTOOLBOX_PAGE (input_value):
     browser.open(url_hash)
 
     page = BeautifulSoup(str(browser.parsed), "lxml")
+
+    print(page)
+
     table = page.find("table", {"class": "customvt2"})
 
     rows = cells = list()
