@@ -69,7 +69,7 @@ def nice_print(response_json,header,artifact):
     for module in response_json['data']:
         item = {}
         item['module_name'] = module['module']
-        result_text += "####Module Name: "+str(module['module'])+"  \n"
+        result_text += "**"+str(module['module'])+"**  \n"
         for module_disposition in disposition_msg['data']:
             if item['module_name'] == module_disposition['module']:
                 if 'verdicts' in module_disposition['data'] and module_disposition['data']['verdicts']['count'] > 0:
