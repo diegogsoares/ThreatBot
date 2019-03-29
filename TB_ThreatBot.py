@@ -27,6 +27,7 @@ from TB_TALOS import *
 from TB_TG import *
 from TB_Umbrella import *
 from TB_VT import *
+from TB_CTR import *
 
 ######################################################
 ##########
@@ -188,10 +189,10 @@ def index(webhook):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_amp= CHECK_AMPTOOLBOX(in_message[1])
-                msg_amp_mark = '###@Cisco Talos/AMP \n'
+                msg_ctr= run_ctr(in_message[1])
+                msg_amp_mark = '###@Cisco Threat Response \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
 
                 msg_vt = CHECK_HASH_VT(in_message[1])
                 msg_vt_mark = '###@Virus Total \n'
