@@ -222,11 +222,13 @@ def index(webhook):
             msg_mark = "###Unauthorized User!! \n Please contact Diego Soares - disoares@cisco.com to request Access\n"
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
                           {"roomId": webhook['data']['roomId'], "text": msg_mark, "markdown": msg_mark})
+        
+        logger.info("Executed!")
+        return "Executed."
 
     datalist.close()
 
-    logger.info("Executed!")
-    return "Executed."
+
 
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
