@@ -94,13 +94,10 @@ def index(webhook):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_talos, msg_BC = TALOS_BLOCK_LIST(in_message[1],"domain")
-                msg_talos_mark = '###@Cisco TALOS \n'
+                msg_ctr = RUN_CTR(in_message[1])
+                msg_talos_mark = '###@Cisco Threat Response \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
-                msg_BC_mark = '###@BrightCloud \n'
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_BC_mark, "markdown": msg_BC_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_BC})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
 
                 msg_vt = CHECK_DOMAIN_VT(in_message[1])
                 msg_vt_mark = '###@Virus Total \n'
@@ -130,10 +127,10 @@ def index(webhook):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_talos, msg_BC = TALOS_BLOCK_LIST(in_message[1],"ip")
-                msg_talos_mark = '###@Cisco TALOS \n'
+                msg_ctr = RUN_CTR(in_message[1])
+                msg_talos_mark = '###@Cisco Threat Response \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos_mark, "markdown": msg_talos_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_talos})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
 
                 msg_vt = CHECK_IP_VT(in_message[1])
                 msg_vt_mark = '###@Virus Total \n'
@@ -189,10 +186,10 @@ def index(webhook):
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg_mark, "markdown": msg_tg_mark})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_tg})
 
-                msg_ctr= run_ctr(in_message[1])
-                msg_amp_mark = '###@Cisco Threat Response \n'
+                msg_amp= CHECK_AMPTOOLBOX(in_message[1])
+                msg_amp_mark = '###@Cisco AMP \n'
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp_mark, "markdown": msg_amp_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_amp})
 
                 msg_vt = CHECK_HASH_VT(in_message[1])
                 msg_vt_mark = '###@Virus Total \n'

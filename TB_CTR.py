@@ -104,7 +104,7 @@ def nice_print(response_json):
 ########## Run CTR Search
 ##########
 ######################################################
-def run_ctr (artifact):
+def RUN_CTR (artifact):
     header = ctr_auth()
     msg = ctr_search(artifact,header,"observables")
     #print(json.dumps(msg, indent=4))   
@@ -120,7 +120,7 @@ def run_ctr (artifact):
 '''
 
 if sys.argv[1]:
-    run_ctr(sys.argv[1])
+    RUN_CTR(sys.argv[1])
 
 else:
     print("Provide Artifact!")
