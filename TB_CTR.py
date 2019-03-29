@@ -61,6 +61,7 @@ def ctr_search(observable,header,action):
 ######################################################
 def nice_print(response_json,header,artifact):
 
+    result_text = ""
     result = []
     disposition_msg = ctr_search(artifact,header,"disposition")
     links_msg = ctr_search(artifact,header,"links")
@@ -68,36 +69,40 @@ def nice_print(response_json,header,artifact):
     for module in response_json['data']:
         item = {}
         item['module_name'] = module['module']
+        result_text += "**Module Name:** "+module['module']
         for module_disposition in disposition_msg['data']:
             if item['module_name'] == module_disposition['module']:
                 if 'verdicts' in module_disposition['data'] and module_disposition['data']['verdicts']['count'] > 0:
                     docs = module_disposition['data']['verdicts']['docs']
                     for doc in docs:
-                        item['disposition'] = doc.get('disposition', 'None')
-                        item['disposition_name'] = doc.get('disposition_name', 'None')
+                        item['disposition'] = doc.get('disposition', '-')
+                        item['disposition_name'] = doc.get('disposition_name', '-')
+                        result_text += "**Disposition:** "+doc.get('disposition_name', 'N/A')+" ("+doc.get('disposition', 'N/A')+")"
+
+        if (module.get('data').get('sightings')):
+            item['sightings_count'] = module.get('data').get('sightings').get("count")
+            result_text += "**Number of Sightings:** "module.get('data').get('sightings').get("count", 'N/A')
+        
+        if (module.get('data').get('judgements')):
+            item['judgements_count'] = module.get('data').get('judgements').get("count")
+            result_text += "**Number of Judgements:** "module.get('data').get('judgements').get("count", 'N/A')
 
         for module_links in links_msg['data']:
             if item['module_name'] == module_links['module']:
                 item['url'] = module_links['url']
-
-        if (module.get('data').get('sightings')):
-            item['sightings_count'] = module.get('data').get('sightings').get("count")
-        
-        if (module.get('data').get('judgements')):
-            item['judgements_count'] = module.get('data').get('judgements').get("count")
+                result_text += "**Module URL:** "module_links['url']
 
         result.append(item)
 
     table = PrettyTable()
     table.field_names = ['Module Name', 'Disposition', 'Disposition Name', 'Sightings Count', 'Judgements Count']
     table.add_row([ '','','','',''])
-
     for item in result:
         table.add_row([item.get('module_name'),item.get('disposition'),item.get('disposition_name'),item.get('sightings_count'),item.get('judgements_count')])
         table.add_row([ '','','','',''])
         
 
-    return (table)
+    return (result_text)
 ######################################################
 ##########
 ########## Run CTR Search
