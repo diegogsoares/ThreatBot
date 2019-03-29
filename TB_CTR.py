@@ -117,7 +117,7 @@ def run_ctr (artifact):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-#'''
+'''
 
 if sys.argv[1]:
     run_ctr(sys.argv[1])
