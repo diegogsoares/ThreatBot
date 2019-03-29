@@ -58,11 +58,11 @@ def ctr_search(observable,header,action):
 ########## Create Nice Table to Print
 ##########
 ######################################################
-def nice_print(response_json):
+def nice_print(response_json,header,artifact):
 
     result = []
-    disposition_msg = ctr_search(sys.argv[1],header,"disposition")
-    links_msg = ctr_search(sys.argv[1],header,"links")
+    disposition_msg = ctr_search(artifact,header,"disposition")
+    links_msg = ctr_search(artifact,header,"links")
 
     for module in response_json['data']:
         item = {}
@@ -108,7 +108,7 @@ def RUN_CTR (artifact):
     header = ctr_auth()
     msg = ctr_search(artifact,header,"observables")
     #print(json.dumps(msg, indent=4))   
-    nice_print(msg)
+    nice_print(msg,header,artifact)
 
     return 
 
