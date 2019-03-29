@@ -62,45 +62,28 @@ def ctr_search(observable,header,action):
 def nice_print(response_json,header,artifact):
 
     result_text = ""
-    result = []
     disposition_msg = ctr_search(artifact,header,"disposition")
     links_msg = ctr_search(artifact,header,"links")
 
     for module in response_json['data']:
-        item = {}
-        item['module_name'] = module['module']
         result_text += "**"+str(module['module'])+"**  \n"
         for module_disposition in disposition_msg['data']:
-            if item['module_name'] == module_disposition['module']:
+            if module['module'] == module_disposition['module']:
                 if 'verdicts' in module_disposition['data'] and module_disposition['data']['verdicts']['count'] > 0:
                     docs = module_disposition['data']['verdicts']['docs']
                     for doc in docs:
-                        item['disposition'] = doc.get('disposition', '-')
-                        item['disposition_name'] = doc.get('disposition_name', '-')
-                        result_text += "**Disposition:** "+str(doc.get('disposition_name', 'N/A'))+" ("+str(doc.get('disposition', 'N/A'))+")"+"  \n"
+                        result_text += "Disposition: "+str(doc.get('disposition_name', 'N/A'))+" ("+str(doc.get('disposition', 'N/A'))+")"+"  \n"
 
         if (module.get('data').get('sightings')):
-            item['sightings_count'] = module.get('data').get('sightings').get("count")
-            result_text += "**Number of Sightings:** "+str(module.get('data').get('sightings').get("count", 'N/A'))+"  \n"
+            result_text += "Number of Sightings: "+str(module.get('data').get('sightings').get("count", 'N/A'))+"  \n"
         
         if (module.get('data').get('judgements')):
-            item['judgements_count'] = module.get('data').get('judgements').get("count")
-            result_text += "**Number of Judgements:** "+str(module.get('data').get('judgements').get("count", 'N/A'))+"  \n"
+            result_text += "*Number of Judgements: "+str(module.get('data').get('judgements').get("count", 'N/A'))+"  \n"
 
         for module_links in links_msg['data']:
-            if item['module_name'] == module_links['module']:
-                item['url'] = module_links['url']
-                result_text += "**Module URL:** "+str(module_links['url'])+"\n\n"
+            if module['module'] == module_links['module']:
+                result_text += "Module URL: "+str(module_links['url'])+"\n\n"
 
-        result.append(item)
-
-    table = PrettyTable()
-    table.field_names = ['Module Name', 'Disposition', 'Disposition Name', 'Sightings Count', 'Judgements Count']
-    table.add_row([ '','','','',''])
-    for item in result:
-        table.add_row([item.get('module_name'),item.get('disposition'),item.get('disposition_name'),item.get('sightings_count'),item.get('judgements_count')])
-        table.add_row([ '','','','',''])
-        
 
     return (result_text)
 ######################################################
