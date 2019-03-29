@@ -95,8 +95,6 @@ def nice_print(response_json,header,artifact):
         table.add_row([item.get('module_name'),item.get('disposition'),item.get('disposition_name'),item.get('sightings_count'),item.get('judgements_count')])
         table.add_row([ '','','','',''])
         
-    #print(json.dumps(result, indent=4))
-    print (table)
 
     return (table)
 ######################################################
@@ -109,6 +107,9 @@ def RUN_CTR (artifact):
     msg = ctr_search(artifact,header,"observables")
     #print(json.dumps(msg, indent=4))   
     table = nice_print(msg,header,artifact)
+
+    #print(json.dumps(result, indent=4))
+    #print (table)
 
     return (table)
 
