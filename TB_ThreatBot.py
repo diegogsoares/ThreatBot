@@ -108,7 +108,7 @@ def index(webhook):
                 msg_visibility_mark = '###@Cisco Threat Response \n'
                 msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": str(msg_ctr)})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
 
@@ -139,7 +139,7 @@ def index(webhook):
                 msg_visibility_mark = '###@Cisco Threat Response \n'
                 msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": str(msg_ctr)})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
             elif (len(in_message[1]) == 40 and validuser == True):
@@ -167,7 +167,7 @@ def index(webhook):
                 msg_visibility_mark = '###@Cisco Threat Response \n'
                 msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": str(msg_ctr)})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
             elif (len(in_message[1]) == 64 and validuser == True):
@@ -197,7 +197,7 @@ def index(webhook):
                 msg_visibility_mark = '###@Cisco Threat Response \n'
                 msg_visibility = 'Want a nice GUI to investigate '+in_message[1]+' go to https://visibility.amp.cisco.com/#/investigate?q='+in_message[1]
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility_mark, "markdown": msg_visibility_mark})
-                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_ctr})
+                sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": str(msg_ctr)})
                 sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg_visibility})
 
             elif validuser == True:
