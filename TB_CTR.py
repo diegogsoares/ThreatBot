@@ -115,7 +115,7 @@ def RUN_CTR (artifact):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-#'''
+'''
 
 if sys.argv[1]:
     table = RUN_CTR(sys.argv[1])
