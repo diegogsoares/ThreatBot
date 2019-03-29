@@ -108,9 +108,6 @@ def RUN_CTR (artifact):
     #print(json.dumps(msg, indent=4))   
     table = nice_print(msg,header,artifact)
 
-    #print(json.dumps(result, indent=4))
-    #print (table)
-
     return (table)
 
 ######################################################
@@ -121,7 +118,8 @@ def RUN_CTR (artifact):
 '''
 
 if sys.argv[1]:
-    RUN_CTR(sys.argv[1])
+    table = RUN_CTR(sys.argv[1])
+    print (table)
 
 else:
     print("Provide Artifact!")
