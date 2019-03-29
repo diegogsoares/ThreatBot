@@ -104,12 +104,14 @@ def nice_print(response_json,header,artifact):
 ##########
 ######################################################
 def RUN_CTR (artifact):
+    
     header = ctr_auth()
     msg = ctr_search(artifact,header,"observables")
     #print(json.dumps(msg, indent=4))   
     table = nice_print(msg,header,artifact)
 
     logger.info("CTR OK!")
+    print("CTR OK!")
 
     return (table)
 
