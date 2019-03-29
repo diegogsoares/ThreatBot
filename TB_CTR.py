@@ -109,8 +109,7 @@ def RUN_CTR (artifact):
     #print(json.dumps(msg, indent=4))   
     table = nice_print(msg,header,artifact)
 
-    logger.info("TG OK!")
-    print("TG OK!")
+    logger.info("CTR OK!")
 
     return (table)
 
@@ -119,7 +118,7 @@ def RUN_CTR (artifact):
 ########## If you want to test this file uncomment the nex section
 ##########
 ######################################################
-'''
+#'''
 
 if sys.argv[1]:
     table = RUN_CTR(sys.argv[1])
