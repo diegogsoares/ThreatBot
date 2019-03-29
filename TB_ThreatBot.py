@@ -225,6 +225,7 @@ def index(webhook):
 
     datalist.close()
 
+    logger.info("Executed!")
     return "Executed."
 
 class S(BaseHTTPRequestHandler):
