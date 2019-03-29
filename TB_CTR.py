@@ -81,16 +81,16 @@ def nice_print(response_json,header,artifact):
 
         if (module.get('data').get('sightings')):
             item['sightings_count'] = module.get('data').get('sightings').get("count")
-            result_text += "**Number of Sightings:** "module.get('data').get('sightings').get("count", 'N/A')
+            result_text += "**Number of Sightings:** "+module.get('data').get('sightings').get("count", 'N/A')
         
         if (module.get('data').get('judgements')):
             item['judgements_count'] = module.get('data').get('judgements').get("count")
-            result_text += "**Number of Judgements:** "module.get('data').get('judgements').get("count", 'N/A')
+            result_text += "**Number of Judgements:** "+module.get('data').get('judgements').get("count", 'N/A')
 
         for module_links in links_msg['data']:
             if item['module_name'] == module_links['module']:
                 item['url'] = module_links['url']
-                result_text += "**Module URL:** "module_links['url']
+                result_text += "**Module URL:** "+module_links['url']
 
         result.append(item)
 
