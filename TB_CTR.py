@@ -1,5 +1,6 @@
-import requests
+from TB_Logger import *
 import credential
+import requests
 import json
 import sys
 from prettytable import PrettyTable
@@ -107,6 +108,9 @@ def RUN_CTR (artifact):
     msg = ctr_search(artifact,header,"observables")
     #print(json.dumps(msg, indent=4))   
     table = nice_print(msg,header,artifact)
+
+    logger.info("TG OK!")
+    print("TG OK!")
 
     return (table)
 
