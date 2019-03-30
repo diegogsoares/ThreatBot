@@ -22,3 +22,6 @@ credential copy.py
 *.old
 
 *.blf
+
+.vscode/*.*
+
