@@ -37,6 +37,8 @@ from TB_CTR import *
 def sendSparkGET(url):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
     request = requests.get(url,headers=header, verify=False)
+        logger.info("WEBEX Post Failed! -  " + str(request.status_code))
+        return "Webex Post Message Error: API Call Status " + str(request.status_code)
     request_json = request.json()
     
     return (request_json)
@@ -44,6 +46,9 @@ def sendSparkGET(url):
 def sendSparkPOST(url, payload):
     header = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+credential.spark_bearer}
     request = requests.post(url, json=payload, headers=header, verify=False)
+    if request.status_code != 200:
+        logger.info("WEBEX Post Failed! -  " + str(request.status_code))
+        return "Webex Post Message Error: API Call Status " + str(request.status_code)
     request_json = request.json()
 
     return (request_json)
